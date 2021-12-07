@@ -1,0 +1,23 @@
+@charset "UTF-8";
+html, body {
+	height: 100%;
+}
+
+.container-fluid,.container {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.readOnly {
+	background-color: #E0E0E0;
+}
+
+.table-bordered {
+	border: 1px solid #FFFFFF;
+}
+
+.table td{
+	vertical-align: middle;
+}
