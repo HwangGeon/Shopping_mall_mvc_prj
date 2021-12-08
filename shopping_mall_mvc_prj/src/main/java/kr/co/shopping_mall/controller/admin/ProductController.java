@@ -8,7 +8,9 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -129,23 +131,40 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value = "productDashInfo.do",method = POST)
 	public String productDashInfo() {
-		return "";
+		
+		JSONObject jo = ps.countHomeDash();
+		
+		return jo.toString();
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "searchProductDash.do",method = POST)
-	public String searchProductDash() {
-		return "123";
+	@RequestMapping(value = "searchProductDash.do",method = POST, produces="text/plain;charset=UTF-8")
+	public String searchProductDash(ProductSearchVO psVO) {
+		
+		String productList = ps.SearchProductDashList(psVO);
+		
+		return productList;
 	}
 	
-	@RequestMapping(value = "updateProductProc.do", method = POST)
-	public void updateProductProc(ProductVO pVO,String 뭐냐) {
-		
+	@ResponseBody
+	@RequestMapping(value = "updateProductProc.do", method = POST, produces="text/plain;charset=UTF-8")
+	public String updateProductProc(ProductVO pVO,String work) {
+		JSONObject jo = ps.updateProduct(pVO,work);	
+		return jo.toString();
 	}
-
-	@RequestMapping(value = "updateProductForm.do",method = POST)
-	public String updateProductForm(String user_id, Model model) {
-		return "";	
+	
+	@RequestMapping(value = "updateProductForm.do",method = GET)
+	public String updateProductForm(String pro_cd, Model model) {
+		
+		try {
+			ProductVO pVO = ps.getProductInfo(pro_cd);
+			model.addAttribute("pVO",pVO);
+			
+		} catch (DataAccessException dae) {
+			model.addAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+		}
+		
+		return "admin/ad_product_updateForm";	
 	}
 }
 

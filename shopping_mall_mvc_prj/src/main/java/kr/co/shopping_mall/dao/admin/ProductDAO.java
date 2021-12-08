@@ -99,4 +99,69 @@ public class ProductDAO {
 		} 
 		return list;
 	}
+
+	public int countProDashData(String flag) {
+		
+		int cnt = 0;
+		
+		StringBuilder countPro = new StringBuilder();
+		countPro.append(" select count(pro_cd) from product ");
+			
+		if(flag == "y" || flag == "n") {countPro.append(" where sell_fl=? ");}
+						
+		if(flag == "a") {
+			cnt=jt.queryForObject(countPro.toString(),Integer.class);
+		} else {	
+			cnt=jt.queryForObject(countPro.toString(), new Object[] {String.valueOf(flag)},Integer.class);
+		};
+		
+		return cnt;
+
+	}
+
+	public List<ProductVO> proDashSearch(String flag, int start, int rowsPerPage) throws DataAccessException{
+		
+		List<ProductVO> list = null;
+
+		StringBuilder selectPro = new StringBuilder();
+		
+		selectPro.append(" select * ");
+		selectPro.append(" from	(select rownum as rnum, p.* ");
+		selectPro.append("   	 from (select * from product ");
+		if(!flag.equals("a")) {
+			selectPro.append(" where sell_fl=? ");
+		}
+		selectPro.append(" order by input_date desc) p) ");  
+		selectPro.append(" where  rnum > ? and rnum <= ?+? ");  
+		selectPro.append(" order by rnum ");  
+		
+		if(!flag.equals("a")) {
+			list = jt.query(selectPro.toString(),new Object[] {String.valueOf(flag), Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectPro());
+		} else {
+			list = jt.query(selectPro.toString(),new Object[] {Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectPro());				
+		}
+
+		return list;
+	}
+
+	public ProductVO selectProductInfo(String pro_cd) throws DataAccessException {
+		ProductVO pv=null;
+
+		String selectProInfo=" select rownum as rnum, p.* from product p where pro_cd=? ";
+		pv=jt.queryForObject(selectProInfo, new Object[] { String.valueOf(pro_cd) }, new SelectPro());
+
+		return pv;
+	}
+
+	public void updateProduct(ProductVO pVO) throws SQLException {
+
+		String updatePro = " update product set pro_name=?, pro_price=?, sell_fl=?, input_date=sysdate where pro_cd=?";
+		jt.update(updatePro, pVO.getPro_name(), pVO.getPro_price(), pVO.getSell_fl(), pVO.getPro_cd());
+
+	}
+
+	public void deleteProduct(ProductVO pVO) throws SQLException {
+		String deletePro = " delete from product where pro_cd=? ";
+		jt.update(deletePro, pVO.getPro_cd());
+	}
 }

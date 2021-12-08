@@ -331,7 +331,8 @@ function productSearch(index) {
 function proDashCount() { //productdashinfo
 	$.ajax({
 		cache: false,
-		url: "proc/product/proDashCount.jsp",
+		url: "productDashInfo.do",
+		type: 'post',
 		dataType: 'json',
 		success: function(data) {
 			$("#proDashCount").empty();
@@ -380,7 +381,8 @@ function proDashSearch(index, flag) {
 	
 		$.ajax({
 		cache: false,
-		url: "proc/product/proDashSearch.jsp",
+		url: "searchProductDash.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -394,7 +396,7 @@ function proDashSearch(index, flag) {
 				proDashTbody += '<td>' + data[key].pro_price + '</td>';
 				proDashTbody += '<td>' + data[key].input_date + '</td>';
 				proDashTbody += '<td>' + data[key].sell_fl + '</td>';
-				proDashTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				proDashTbody += '<td>' + '<a href=\"updateProductForm.do?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
 				proDashTbody += '</tr>';
 			}
 			$("#proDashTbody").append(proDashTbody);
