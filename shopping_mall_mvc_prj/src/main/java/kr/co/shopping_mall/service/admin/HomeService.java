@@ -37,8 +37,9 @@ public class HomeService {
 		return admin_id;
 	}
 	
-	public boolean changePass(AdminVO aVO, String newPass, String nowPass) {
+	public JSONObject changePass(AdminVO aVO, String newPass, String nowPass) {
 		
+		HashMap<String, Object> hm = new HashMap<String, Object>();
 		boolean flag = false;
 		
 		try {
@@ -57,14 +58,17 @@ public class HomeService {
 		} catch(DataAccessException dae) {
 			dae.printStackTrace();
 		}
-		return flag;
+		
+		hm.put("flag", flag);
+		
+		return new JSONObject(hm);
 	}
 
 	public JSONObject countHomeDash() {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-		String NowDate = sdf.format(new Date());
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMM01");
+		String NowDate = sdf.format(new Date());
 		String monDate = sdf1.format(new Date());
 		
 		int countPrice1 = 0, countPrice2 = 0;

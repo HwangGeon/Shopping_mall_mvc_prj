@@ -1,5 +1,6 @@
 package kr.co.shopping_mall.controller.admin;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.io.File;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +19,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import kr.co.shopping_mall.service.admin.ProductService;
+import kr.co.shopping_mall.vo.ProductSearchVO;
 import kr.co.shopping_mall.vo.ProductVO;
 
 @Controller
@@ -104,4 +107,45 @@ public class ProductController {
 		
 		ps.addProduct(pVO);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "productPagenation.do",method = GET)
+	public String productPagenation(ProductSearchVO psVO) {
+		
+		String pageCnt = ps.countSearchProduct(psVO);
+		
+		return pageCnt;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "searchProduct.do",method = POST, produces="text/plain;charset=UTF-8")
+	public String searchProduct(ProductSearchVO psVO) {
+		
+		String productList = ps.getSearchProductList(psVO);
+
+		return productList;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "productDashInfo.do",method = POST)
+	public String productDashInfo() {
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "searchProductDash.do",method = POST)
+	public String searchProductDash() {
+		return "";
+	}
+	
+	@RequestMapping(value = "updateProductProc.do", method = POST)
+	public void updateProductProc(ProductVO pVO,String ¹¹³Ä) {
+		
+	}
+
+	@RequestMapping(value = "updateProductForm.do",method = POST)
+	public String updateProductForm(String user_id, Model model) {
+		return "";	
+	}
 }
+

@@ -88,7 +88,7 @@ $(function() {
 			url: "passUpdateProc.do", 
 			type: "POST",
 			data: {newPass : newPass, nowPass : nowPass},
-			async: false, 
+			dataType: 'json',
 			success: function(flag) { 
 				if(flag){
 					alert("비밀번호 변경에 성공하셨습니다. 다음 로그인시 새로운 비밀번호로 로그인 해주세요.");
@@ -260,7 +260,7 @@ function proPagenation() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/product/pagenation.jsp",
+		url: "productPagenation.do",
 		type: 'get',
 		data: condition,
 		success: function(pageCount) {
@@ -300,7 +300,8 @@ function productSearch(index) {
 
 	$.ajax({
 		cache: false,
-		url: "proc/product/productSearch.jsp",
+		url: "searchProduct.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {

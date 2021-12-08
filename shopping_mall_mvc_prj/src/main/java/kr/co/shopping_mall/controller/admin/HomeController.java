@@ -47,11 +47,13 @@ public class HomeController {
 	
 	@ResponseBody
 	@RequestMapping(value = "passUpdateProc.do",method = POST)
-	public boolean passUpdateProc(AdminVO aVO, String newPass, String nowPass, HttpSession session) {
-		aVO.setAdmin_id((String)session.getAttribute("admin_id"));
-		boolean flag = hs.changePass(aVO, newPass, nowPass);
+	public String passUpdateProc(String newPass, String nowPass, HttpSession session) {
 		
-		return flag;
+		AdminVO aVO = new AdminVO();
+		aVO.setAdmin_id((String)session.getAttribute("admin_id"));
+		JSONObject flag = hs.changePass(aVO, newPass, nowPass);
+		
+		return flag.toString();
 	}
 	
 	@ResponseBody
