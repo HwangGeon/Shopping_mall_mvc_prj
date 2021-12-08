@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+body, form, fieldset, legend, div, dl, dt, dd, ul, ol, li, h1, h2, h3,
+	h4, h5, h6, textarea, p, th, td {
+	margin: 0px;
+	padding: 0px
+}
+
+fieldset, img {
+	border: 0px
+}
+
+dl, ul, ol, menu, li {
+	list-style: none
+}
+
+input, select, textarea, button {
+	border-radius: 0px;
+	vertical-align: middle
+}
+
+body, th, td, input, select, textarea, button {
+	font-size: 13px;
+	line-height: 1.5;
+	font-family: AppleSDGothicNeo-Regular, 'Malgun Gothic', '���� ���',
+		dotum, '����', sans-serif;
+	color: #333;
+}
+
+a {
+	color: #333;
+	text-decoration: none
+}
+
+a:hover {
+	color: #219eef;
+	text-decoration: underline
+}
+
+.inputBox {
+	border: 1px solid #d6d6d6;
+	background-color: #ffffff;
+	height: 36px
+}
+
+.btn {
+	border: 1px solid #e9e9e9;
+	background-color: #ffffff;
+	height: 40px;
+	cursor: pointer
+}

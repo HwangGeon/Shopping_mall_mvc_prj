@@ -135,7 +135,7 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value = "searchProductDash.do",method = POST)
 	public String searchProductDash() {
-		return "";
+		return "123";
 	}
 	
 	@RequestMapping(value = "updateProductProc.do", method = POST)
