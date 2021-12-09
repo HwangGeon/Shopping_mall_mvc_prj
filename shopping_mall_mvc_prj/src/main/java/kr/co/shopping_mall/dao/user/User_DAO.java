@@ -15,7 +15,6 @@ public class User_DAO {
 	public String selectId(UserVO uVO) throws DataAccessException {	
 		
 		String user_id = "";
-		
 		String selectId = "select user_id from user where user_id=? and user_pw=?";
 		user_id = jt.queryForObject(selectId, new Object[] { uVO.getUser_id(), uVO.getUser_pw() }, String.class);
 		

@@ -77,7 +77,6 @@ h1{
 } 
 .idpwFind{margin-top:10px;float:right; font-size:16px; color:#000000; text-decoration:none !important;}
 .idpwFind:hover{color:#000000;}
-
 </style>
 
 <script type="text/javascript">

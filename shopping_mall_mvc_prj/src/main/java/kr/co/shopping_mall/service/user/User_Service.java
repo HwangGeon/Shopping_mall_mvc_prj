@@ -28,7 +28,6 @@ public class User_Service {
 		} catch (DataAccessException dae) {
 			dae.printStackTrace();
 		}
-		
 		return user_id;
 	}
 }

@@ -43,7 +43,6 @@ public class User_Controller {
 	public String mainPage() {
 		return "index";
 	}
-	
 	@RequestMapping(value = "login/userLogout.do", method = GET)
 	public String userLogout(SessionStatus session, Model model) {
 		((HttpSession) session).invalidate();
