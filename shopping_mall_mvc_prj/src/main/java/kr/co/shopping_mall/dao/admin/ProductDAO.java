@@ -119,7 +119,7 @@ public class ProductDAO {
 
 	}
 
-	public List<ProductVO> proDashSearch(String flag, int start, int rowsPerPage) throws DataAccessException{
+	public List<ProductVO> selectProductDashList(String flag, int start, int rowsPerPage) throws DataAccessException{
 		
 		List<ProductVO> list = null;
 

@@ -141,7 +141,7 @@ public class ProductController {
 	@RequestMapping(value = "searchProductDash.do",method = POST, produces="text/plain;charset=UTF-8")
 	public String searchProductDash(ProductSearchVO psVO) {
 		
-		String productList = ps.SearchProductDashList(psVO);
+		String productList = ps.getSearchProductDashList(psVO);
 		
 		return productList;
 	}

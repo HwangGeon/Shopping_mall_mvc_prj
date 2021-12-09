@@ -56,10 +56,10 @@
 		<div class="row h-100">
 			<div class="col-md-3 col-lg-2 menuTab">
 				<div class="list-group mb-4 mt-4" id="menuList">
-					<a href="#list-home" class="list-group-item list-group-item-action active text-left py-4 mb-2 font-weight-bold" data-toggle="list">HOME</a>
-					<a href="#list-user" class="list-group-item list-group-item-action text-left py-4 mb-2 font-weight-bold" data-toggle="list">회원관리</a>
-					<a href="#list-order" class="list-group-item list-group-item-action text-left py-4 mb-2 font-weight-bold" data-toggle="list">주문관리</a>
-					<a href="#list-product" class="list-group-item list-group-item-action text-left py-4 mb-2 font-weight-bold" data-toggle="list">상품관리</a>
+					<a href="#list-home" class="list-group-item list-group-item-action active text-left py-4 mb-2 font-weight-bold" onclick="homeDashCount();" data-toggle="list">HOME</a>
+					<a href="#list-user" class="list-group-item list-group-item-action text-left py-4 mb-2 font-weight-bold" onclick="userDashCount();" data-toggle="list">회원관리</a>
+					<a href="#list-order" class="list-group-item list-group-item-action text-left py-4 mb-2 font-weight-bold" onclick="orderDashCount();" data-toggle="list">주문관리</a>
+					<a href="#list-product" class="list-group-item list-group-item-action text-left py-4 mb-2 font-weight-bold" onclick="proDashCount();" data-toggle="list">상품관리</a>
 				</div>
 			</div>
 
