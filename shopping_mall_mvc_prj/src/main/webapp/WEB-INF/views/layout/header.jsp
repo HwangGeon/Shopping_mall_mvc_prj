@@ -10,19 +10,19 @@ $(function(){
 });//ready
 
 function moveLogin(){
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="login/loginForm.do";
 }
 
 function moveLogout(){
-	location.href="http://localhost/shopping_mall_prj/views/user/logoout_proc.jsp";
+	location.href="http://localhost/shopping_mall/views/user/logoout_proc.do";
 }
 
 function moveMy(){
-	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+	location.href="http://localhost/shopping_mall/views/user/myOrder.do";
 }
 
 function moveCart(){
-	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp";
+	location.href="http://localhost/shopping_mall/views/board/cart_list.do";
 }
 </script>
 	<h1
@@ -54,12 +54,12 @@ function moveCart(){
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=0">전체상품</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=1">농산물</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=2">수산물</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=3">축산물</a></li>
+						aria-current="page" href="http://localhost/shopping_mall/views/board/prod_list.do?category_cd=0">전체상품</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall/views/board/prod_list.do?category_cd=1">농산물</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall/views/board/prod_list.do?category_cd=2">수산물</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall/views/board/prod_list.do?category_cd=3">축산물</a></li>
 				</ul>                                                      
-				<form class="d-flex" id="searchFrm" action="http://localhost/shopping_mall_prj/views/board/prod_list.jsp" method="get">
+				<form class="d-flex" id="searchFrm" action="http://localhost/shopping_mall/views/board/prod_list.do" method="get">
 					<div class="input-group" style="align-items: center;">
 						<input type="text" class="form-control" name="searchValue"
 							style="border-radius: 0.25rem; width: 200px; height: 38px; margin-right: 5px; line-height: 62px;">
