@@ -132,7 +132,7 @@ public class ProductController {
 	@RequestMapping(value = "productDashInfo.do",method = POST)
 	public String productDashInfo() {
 		
-		JSONObject jo = ps.countHomeDash();
+		JSONObject jo = ps.countProductDash();
 		
 		return jo.toString();
 	}

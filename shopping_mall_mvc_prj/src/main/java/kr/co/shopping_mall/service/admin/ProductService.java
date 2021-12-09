@@ -49,7 +49,7 @@ public class ProductService {
 		return gson.toJson(productList);
 	}
 
-	public JSONObject countHomeDash() {
+	public JSONObject countProductDash() {
 		
 		int countAll = pd.countProDashData("a");
 		int countSellY = pd.countProDashData("y");
