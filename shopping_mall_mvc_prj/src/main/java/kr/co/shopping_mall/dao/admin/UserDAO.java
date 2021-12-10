@@ -39,7 +39,7 @@ public class UserDAO {
 				}
 			}
 	
-	public int countUserDashData(String flag) throws DataAccessException {
+	public int selectUserDashCnt(String flag) throws DataAccessException {
 		int cnt = 0;
 		
 		StringBuilder countUser = new StringBuilder();

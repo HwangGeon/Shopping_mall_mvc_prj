@@ -27,9 +27,9 @@ public class UserService {
 	public JSONObject countUserDash() {
 
 		
-		 int countNewUser = ud.countUserDashData("n"); 
-		 int countSecUser = ud.countUserDashData("y"); 
-		 int countAllUser = ud.countUserDashData("a");
+		 int countNewUser = ud.selectUserDashCnt("n"); 
+		 int countSecUser = ud.selectUserDashCnt("y"); 
+		 int countAllUser = ud.selectUserDashCnt("a");
 		 
 		 HashMap<String, Object> hm = new HashMap<String, Object>();
 		 hm.put("countNewUser", countNewUser); hm.put("countSecUser", countSecUser);
@@ -170,7 +170,6 @@ public class UserService {
 			gsee.printStackTrace();
 		}
 		
-		HashMap<String, String> hm = new HashMap<String, String>();
 		
 		String msg = uVO.getUser_id()+"님의 정보가 변경되었습니다.";
 		int cnt = 0;
@@ -187,6 +186,7 @@ public class UserService {
 			msg = uVO.getUser_id()+"님의 정보를 변경할 수 없습니다.";
 		}
 		
+		HashMap<String, String> hm = new HashMap<String, String>();
 		hm.put("msg", msg);
 		
 		return new JSONObject(hm);

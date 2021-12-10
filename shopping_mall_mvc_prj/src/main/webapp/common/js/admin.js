@@ -571,7 +571,8 @@ function userSearch(index) {
 function orderDashCount(){
 		$.ajax({
 		cache: false,
-		url: "proc/order/orderDashCount.jsp",
+		url: "orderDashInfo.do",
+		type: 'post',
 		dataType: 'json',
 		success: function(data) {
 			$("#orderDashCount").empty();
@@ -617,7 +618,8 @@ function orderDashSearch(index, flag) {
 	
 		$.ajax({
 		cache: false,
-		url: "proc/order/orderDashSearch.jsp",
+		url: "searchOrderDash.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -629,7 +631,7 @@ function orderDashSearch(index, flag) {
 				orderDashTbody += '<td>' + data[key].ord_cd + '</td>';
 				orderDashTbody += '<td>' + data[key].ord_date + '</td>';
 				orderDashTbody += '<td>' + data[key].ord_stat_name + '</td>';
-				orderDashTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
+				orderDashTbody += '<td>' + '<a href=\"updateOrderForm.do?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
 				orderDashTbody += '</tr>';
 			}
 			$("#orderDashTbody").append(orderDashTbody);
@@ -657,7 +659,7 @@ function ordPagenation() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/order/pagenation.jsp",
+		url: "orderPagenation.do",
 		type: 'get',
 		data: condition,
 		success: function(pageCount) {
@@ -703,7 +705,8 @@ function orderSearch(index) {
 
 	$.ajax({
 		cache: false,
-		url: "proc/order/orderSearch.jsp",
+		url: "searchOrder.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -715,7 +718,7 @@ function orderSearch(index) {
 				ordSearchTbody += '<td>' + data[key].ord_cd + '</td>';
 				ordSearchTbody += '<td>' + data[key].ord_date + '</td>';
 				ordSearchTbody += '<td>' + data[key].ord_stat_name + '</td>';
-				ordSearchTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">수정</a></td>';
+				ordSearchTbody += '<td>' + '<a href=\"updateOrderForm.do?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">수정</a></td>';
 				ordSearchTbody += '</tr>';
 			}
 			$("#ordSearchTbody").append(ordSearchTbody);
