@@ -63,14 +63,14 @@ public class ProductService {
 		return new JSONObject(hm);
 	}
 
-	public String SearchProductDashList(ProductSearchVO psVO) {
+	public String getSearchProductDashList(ProductSearchVO psVO) {
 		
 		int index = Integer.valueOf(psVO.getIndex());
 		int rowsPerPage = 8; //페이지당 보여줄갯수
 		//데이터시작점
 		int start = (index-1) * rowsPerPage;
 
-		List<ProductVO> proList = pd.proDashSearch(psVO.getFlag(), start, rowsPerPage);
+		List<ProductVO> proList = pd.selectProductDashList(psVO.getFlag(), start, rowsPerPage);
 
 		Gson gson = new Gson();	
 		return gson.toJson(proList);

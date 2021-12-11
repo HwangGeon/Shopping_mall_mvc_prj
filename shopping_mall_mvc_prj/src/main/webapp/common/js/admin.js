@@ -1,9 +1,6 @@
 $(function() {
-	//페이지정보 초기화
+	//홈대시정보 초기화
 	homeDashCount();
-	proDashCount();
-	userDashCount();
-	orderDashCount();
 	
 	//==========================================================================================================================
 	//datepicker	
@@ -315,7 +312,7 @@ function productSearch(index) {
 				proSearchTbody += '<td>' + data[key].pro_price + '</td>';
 				proSearchTbody += '<td>' + data[key].input_date + '</td>';
 				proSearchTbody += '<td>' + data[key].sell_fl + '</td>';
-				proSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				proSearchTbody += '<td>' + '<a href=\"updateProductForm.do?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
 				proSearchTbody += '</tr>';
 			}
 			$("#proSearchTbody").append(proSearchTbody);
@@ -343,9 +340,6 @@ function proDashCount() { //productdashinfo
 			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(' + data.countSellN +',"n");\'>' + data.countSellN + '개</a></td>';
 			proDashCount += '</tr>'
 			$("#proDashCount").append(proDashCount);
-		},
-		error: function() {
-			alert("실패");
 		}
 	});
 }
@@ -412,7 +406,8 @@ function proDashSearch(index, flag) {
 function userDashCount(){
 		$.ajax({
 		cache: false,
-		url: "proc/user/userDashCount.jsp",
+		url: "userDashInfo.do",
+		type: 'post',
 		dataType: 'json',
 		success: function(data) {
 			$("#userDashCount").empty();
@@ -423,9 +418,6 @@ function userDashCount(){
 			userDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'userDashPagenation(' + data.countAllUser +',"a");\'>' + data.countAllUser + '명</a></td>';
 			userDashCount += '</tr>'
 			$("#userDashCount").append(userDashCount);
-		},
-		error: function() {
-			alert("실패");
 		}
 	});
 } 
@@ -462,7 +454,8 @@ function userDashSearch(index, flag) {
 	
 		$.ajax({
 		cache: false,
-		url: "proc/user/userDashSearch.jsp",
+		url: "searchUserDash.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -478,7 +471,7 @@ function userDashSearch(index, flag) {
 				userDashTbody += '<td>' + data[key].user_addr + '</td>';
 				userDashTbody += '<td>' + data[key].user_email + '</td>';
 				userDashTbody += '<td>' + data[key].reg_date + '</td>';
-				userDashTbody += '<td>' + '<a href=\"ad_user_updateForm.jsp?user_id=' + data[key].user_id + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				userDashTbody += '<td>' + '<a href=\"updateUserForm.do?user_id=' + data[key].user_id + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
 				userDashTbody += '</tr>';
 			}
 			$("#userDashTbody").append(userDashTbody);
@@ -506,7 +499,7 @@ function userPagenation() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/user/pagenation.jsp",
+		url: "userPagenation.do",
 		type: 'get',
 		data: condition,
 		success: function(pageCount) {
@@ -545,7 +538,8 @@ function userSearch(index) {
 
 	$.ajax({
 		cache: false,
-		url: "proc/user/userSearch.jsp",
+		url: "searchUser.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -561,7 +555,7 @@ function userSearch(index) {
 				userSearchTbody += '<td>' + data[key].user_addr + '</td>';
 				userSearchTbody += '<td>' + data[key].user_email + '</td>';
 				userSearchTbody += '<td>' + data[key].reg_date + '</td>';
-				userSearchTbody += '<td>' + '<a href=\"ad_user_updateForm.jsp?user_id=' + data[key].user_id + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				userSearchTbody += '<td>' + '<a href=\"updateUserForm.do?user_id=' + data[key].user_id + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
 				userSearchTbody += '</tr>';
 			}
 			$("#userSearchTbody").append(userSearchTbody);
@@ -577,7 +571,8 @@ function userSearch(index) {
 function orderDashCount(){
 		$.ajax({
 		cache: false,
-		url: "proc/order/orderDashCount.jsp",
+		url: "orderDashInfo.do",
+		type: 'post',
 		dataType: 'json',
 		success: function(data) {
 			$("#orderDashCount").empty();
@@ -587,9 +582,6 @@ function orderDashCount(){
 			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countInDelivery +',"2");\'>' + data.countInDelivery + '건</a></td>';
 			orderDashCount += '</tr>'
 			$("#orderDashCount").append(orderDashCount);
-		},
-		error: function() {
-			alert("실패");
 		}
 	});
 } 
@@ -626,7 +618,8 @@ function orderDashSearch(index, flag) {
 	
 		$.ajax({
 		cache: false,
-		url: "proc/order/orderDashSearch.jsp",
+		url: "searchOrderDash.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -638,7 +631,7 @@ function orderDashSearch(index, flag) {
 				orderDashTbody += '<td>' + data[key].ord_cd + '</td>';
 				orderDashTbody += '<td>' + data[key].ord_date + '</td>';
 				orderDashTbody += '<td>' + data[key].ord_stat_name + '</td>';
-				orderDashTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
+				orderDashTbody += '<td>' + '<a href=\"updateOrderForm.do?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
 				orderDashTbody += '</tr>';
 			}
 			$("#orderDashTbody").append(orderDashTbody);
@@ -666,7 +659,7 @@ function ordPagenation() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/order/pagenation.jsp",
+		url: "orderPagenation.do",
 		type: 'get',
 		data: condition,
 		success: function(pageCount) {
@@ -712,7 +705,8 @@ function orderSearch(index) {
 
 	$.ajax({
 		cache: false,
-		url: "proc/order/orderSearch.jsp",
+		url: "searchOrder.do",
+		type: 'post',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
@@ -724,7 +718,7 @@ function orderSearch(index) {
 				ordSearchTbody += '<td>' + data[key].ord_cd + '</td>';
 				ordSearchTbody += '<td>' + data[key].ord_date + '</td>';
 				ordSearchTbody += '<td>' + data[key].ord_stat_name + '</td>';
-				ordSearchTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">수정</a></td>';
+				ordSearchTbody += '<td>' + '<a href=\"updateOrderForm.do?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">수정</a></td>';
 				ordSearchTbody += '</tr>';
 			}
 			$("#ordSearchTbody").append(ordSearchTbody);
@@ -751,9 +745,6 @@ function homeDashCount(){
 			homeDashTbody += '<td>' + data.countPrice2.toLocaleString('ko-KR') +'원 (' + data.countOrder2 + '건)' +'</td>';
 			homeDashTbody += '</tr>'
 			$("#homeDashTbody").append(homeDashTbody);
-		},
-		error: function() {
-			alert("실패");
 		}
 	});
 } 
@@ -776,9 +767,6 @@ function homeDashPeriod(){
 			let homeDashPeriod = '';
 			homeDashPeriod += '<div class="period">'+ data.countPrice.toLocaleString('ko-KR') +'원 ('+ data.countOrder + '건)' + '</div>';
 			$("#homeDashPeriod").append(homeDashPeriod);
-		},
-		error: function() {
-			alert("실패");
 		}
 	});
 } 

@@ -4,14 +4,13 @@
     <c:if test="${empty sessionScope.admin_id}">
     <c:redirect url="ad_login.jsp"/>
     </c:if>
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>상품정보수정</title>
+<title>회원정보수정</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
@@ -32,13 +31,14 @@
 
 <script type="text/javascript">
 $(function() {
-	//판매상태 radio 체크
-	let sell_fl = $('#sell_flag').val();
-	$('#'+sell_fl).prop("checked",true);
+	//현재등급 선택
+	let grade_no = $('#grade_no').val();
+	$("#user_grade").val(grade_no).prop("selected", true);
 });
-
+	
 function btnClick(str) {
 	let formData = $("#updateForm").serializeArray();
+	
 	formData.push({name: 'work', value: str});
 	let answer;
 
@@ -49,8 +49,8 @@ function btnClick(str) {
 		}
 		work(formData);
 	}
-	if(str == 'delete'){
-		answer = confirm("정말 삭제하시겠습니까?");
+	if(str == 'secession'){
+		answer = confirm("정말 탈퇴시키겠습니까?");
 		if (!answer) {
 			return false;
 		}
@@ -63,69 +63,73 @@ function btnClick(str) {
 	function work(formData) {
         $.ajax({
         	cache: false,
-            url: "updateProductProc.do", 
+            url: "updateUserProc.do", 
             type : "POST", 
             data : formData, 
             dataType: 'json',
-            success: function(flag) {
-            	alert(flag.flag);
-            	opener.parent.proDashCount();
+            success: function(msg) {
+            	alert(msg.msg);
+            	opener.parent.userDashCount();
             	self.close();
             },
 			error: function() {
-				alert("상품정보를 변경할 수 없습니다.");
+				alert("유저정보를 변경할 수 없습니다.");
 				self.close();
-			} 
+			}
         });
 	}
 }
 </script>
 </head>
 <body>
-<c:if test="${not empty msg}">
-<script type="text/javascript">
-alert("이미 삭제되거나 없는 상품입니다.");
-self.close();
-</script>
-</c:if>
 	<div class="container">
 		<form id="updateForm" method="post">
 			<table class="table table-bordered text-center">
 				<thead class="thead-dark">
 					<tr>
-						<th>상품코드</th>
-						<th>상품명</th>
-						<th>판매가</th>
-						<th>판매상태</th>
-						<th>상품등록일</th>
+						<th>회원ID</th>
+						<th>이름</th>
+						<th>회원등급</th>
+						<th>휴대전화</th>
+						<th>주소</th>
+						<th>이메일</th>
+						<th>가입일자</th>
+						<c:if test="${ empty uVO.sec_date }">
+						<th>탈퇴일자</th>	
+						</c:if>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td class="readOnly"><input type="text" class="form-control" name="pro_cd" value='${ pVO.pro_cd }' readonly="readonly"/></td>
-						<td><input type="text" class="form-control" name="pro_name" value='${ pVO.pro_name }'/></td>
-						<td><input type="number" class="form-control" name="pro_price" value='${ pVO.pro_price }'/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="user_id" value="${ uVO.user_id }" readonly="readonly"/></td>
+						<td><input type="text" class="form-control" name="user_name" value="${ uVO.user_name }"/></td>
 						<td>
- 					<div class="col-10">
- 						<input type="hidden" id="sell_flag" value="${ pVO.sell_fl }">
-      					<div class="form-check float-sm-left">
-       				 		<input class="form-check-input" type="radio" name="sell_fl" id="y" value="y">
-        					<label class="form-check-label" for="sell">판매함</label>
-      					</div>
-      					<div class="form-check float-sm-left">
-       						<input class="form-check-input" type="radio" name="sell_fl" id="n" value="n">
-       					 	<label class="form-check-label" for="notSell">판매안함</label>
-      					</div>
-      				</div>
+							<input type="hidden" id="grade_no" value="${ uVO.grade_no }">
+							<select class="custom-select" id="user_grade" name="grade_no">
+  								<option value="1">New</option>
+ 						 		<option value="2">Bronze</option>
+  								<option value="3">Silver</option>
+  								<option value="4">Gold</option>
+  								<option value="5">Diamond</option>
+  								<option value="6">VIP</option>
+								</select>
 						</td>
-						<td class="readOnly"><input type="text" class="form-control" name="input_date" value='${ pVO.input_date }' readonly="readonly"/></td>
+						<td><input type="text" class="form-control" name=user_tel value="${ uVO.user_tel }"/></td>
+						<td><input type="text" class="form-control" name="user_addr" value="${ uVO.user_addr }"/></td>
+						<td><input type="email" class="form-control" name="user_email" value="${ uVO.user_email }"/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="reg_date" value="${ uVO.reg_date }" readonly="readonly"/></td>
+						<c:if test="${ empty uVO.sec_date }">
+						<td class="readOnly"><input type="text" class="form-control" name="reg_date" value="${ uVO.sec_date }" readonly="readonly"/></td>
+						</c:if>
 					</tr>
 				</tbody>
 			</table>
 			<div class="row">
-			<input type="button" class="btn btn-dark col-auto ml-3 mr-auto" onclick="btnClick('delete');" value="삭제">
+			<c:if test="${ empty uVO.sec_date }">
+			<input type="button" class="btn btn-dark col-auto ml-3 mr-auto" onclick="btnClick('secession');" value="회원탈퇴">
 			<input type="button" class="btn btn-primary col-auto mr-3" onclick="btnClick('update');" value="수정완료">
 			<input type="button" class="btn btn-outline-primary mr-3" onclick="btnClick('cancle');" value="취소">
+			</c:if>
 			</div>
 		</form>
 	</div>
