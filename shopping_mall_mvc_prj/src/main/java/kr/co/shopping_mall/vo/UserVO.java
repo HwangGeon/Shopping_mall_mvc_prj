@@ -1,13 +1,34 @@
 package kr.co.shopping_mall.vo;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+
 public class UserVO {
 	
+	@NotEmpty
+	@Length(min=5, max=12)
+	//@Pattern()
 	private String user_id;
+	
+	@NotEmpty
 	private String user_pw;
+	
+	@NotEmpty
 	private String user_name;
+	
+	@NotEmpty
 	private String user_tel;
+	
+	@NotEmpty
+	@Email
 	private String user_email;
+	
+	@NotEmpty
 	private String user_addr;
+	
 	private String grade_no;
 	private String grade_name;
 	private String reg_date;

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+ <!-- Favicon-->
+  <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <script type="text/javascript">
 $(function(){
 	$("#searchBtn").click(function(){
@@ -10,11 +12,12 @@ $(function(){
 });//ready
 
 function moveLogin(){
-	location.href="login/loginForm.do";
+	//location.href="http://localhost/shopping_mall/user/login/loginForm.do";
+	location.href="user/login/loginForm.do";
 }
 
 function moveLogout(){
-	location.href="http://localhost/shopping_mall/views/user/logoout_proc.do";
+	location.href="http://localhost/shopping_mall/user/login/userLogout.do";
 }
 
 function moveMy(){
@@ -27,7 +30,7 @@ function moveCart(){
 </script>
 	<h1
 		style="text-align: center; font-size:2.5rem; margin: 30px 0; color: #D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
-		<a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
+		<a href="http://localhost/shopping_mall/index.do" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
 	<% if(session.getAttribute("user_id")==null){ %>
 	<input type="button" class="btn" value="로그인"
 		style="position: absolute; top: 10px; right: 110px;" onclick="moveLogin()">

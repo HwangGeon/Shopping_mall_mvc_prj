@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>로그인</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <link rel="stylesheet"
    href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
@@ -90,6 +90,9 @@ $(function(){
 		}
 	});
 });//ready
+<c:if test="${ not empty msg }">
+	alert("${ msg }");
+</c:if>
 <c:if test="${ param.err_flag eq '1' }">
 alert("로그인이 필요한 페이지입니다.");//실행
 </c:if>
@@ -99,9 +102,9 @@ alert("로그인이 필요한 페이지입니다.");//실행
 <body>
     <div class="container container1">
       <div class="mb-5 container2">
-         <h1><a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none;color:#D09869;">1조네 농산물</a></h1>
+         <h1><a href="../main/user_main.do" style="text-decoration:none;color:#D09869;">1조네 농산물</a></h1>
       </div>
-      <form name="frm" id="frm" action="login_proc.jsp" method="post" >
+      <form name="frm" id="frm" action="userLogin.do" method="post" >
          <div class="input-group input-group-lg mb-3">
             <input type="text" name="user_id" class="form-control" placeholder="아이디" required >
          </div>
@@ -109,7 +112,7 @@ alert("로그인이 필요한 페이지입니다.");//실행
             <input type="password" name="user_pw" id="user_pw" class="form-control" placeholder="비밀번호" required>
          </div>
          <button type="button" id="login" class="btn btn-default btn-lg">로그인</button>
-         <input type="button" id="join"class="btn btn-default btn-lg" value="회원가입" onclick="location.href='joinForm.jsp'"/>
+         <input type="button" id="join"class="btn btn-default btn-lg" value="회원가입" onclick="location.href='http://localhost/shopping_mall/user/member/joinForm.do'"/>
          <a class="idpwFind" href="http://localhost/shopping_mall_prj/views/help/idpwFind.jsp">아이디/비밀번호 찾기</a>
       </form>
    </div> 
