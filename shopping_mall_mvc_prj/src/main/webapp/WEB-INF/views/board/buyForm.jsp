@@ -1,4 +1,4 @@
-<%@page import="kr.co.shopping_mall.vo.UserInfoVO"%>
+<%-- <%@page import="kr.co.shopping_mall.vo.UserInfoVO"%>
 <%@page import="kr.co.shopping_mall.dao.user.User_DAO"%>
 <%@page import="kr.co.shopping_mall.vo.DeliveryVO"%>
 <%@page import="kr.co.shopping_mall.vo.ProductVO"%>
@@ -221,3 +221,4 @@ function buy(){
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
+ --%>
