@@ -3,17 +3,16 @@ package kr.co.shopping_mall.controller.user;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.support.SessionStatus;
 
 import kr.co.shopping_mall.service.user.User_Service;
 import kr.co.shopping_mall.vo.UserVO;
@@ -61,7 +60,7 @@ public class User_Controller {
 	}
 	
 	  @RequestMapping(value = "member/userJoin.do", method = POST)
-	  public String userJoin(@ModelAttribute @Valid  UserVO uVO, Model model) {
+	  public String userJoin(@ModelAttribute @Valid  UserVO uVO) {
 		 us.addMember(uVO);
 		 return "user/joinCompl";
 	  }
@@ -71,18 +70,39 @@ public class User_Controller {
 			return "user/id_dup";
 		}
 	  
-	  @RequestMapping(value = "member/id_dup_proc.do", method = GET)
-	  public void idDup_proc(String user_id, Model model) {
-		  
-	  }
-	  
+		 @RequestMapping(value = "member/id_dup_proc.do", method = GET) 
+		 public String idDup_proc(String user_id, Model model) { 
+			 String returnId = us.idSearch(user_id);
+			 model.addAttribute("user_id", returnId);
+			 return "user/id_dup";
+		 }
+	
 	  @RequestMapping(value = "member/deleteForm.do", method = GET)
 	  public String userDeleteForm() {
 		  return "user/deleteForm";
 	  }
 	  
-		 
-	
+	  @RequestMapping(value = "member/delete_proc.do", method = GET)
+	  public String userDeleteProc(UserVO uVO, HttpSession session,Model model) {
+		 int cnt=0;
+		 try {
+			cnt=us.deleteMember(uVO);
+			return "user/deleteCompl";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			model.addAttribute("msg","비밀번호가 일치하지 않습니다.");
+			return "user/deleteForm";
+		}
+		 /*
+		  if(cnt==1){
+				session.invalidate();
+		 return "user/deleteCompl";
+		  }else {
+			  model.addAttribute("msg","비밀번호가 일치하지 않습니다.");
+			  return "user/deleteForm";
+		  }*/
+	  }
+	  
 }//class
 
 

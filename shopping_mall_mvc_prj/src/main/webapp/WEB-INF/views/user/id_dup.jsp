@@ -10,12 +10,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>아이디 중복확인</title>
-<link rel="stylesheet" type="text/css" href="http://localhost/jsp_prj/common/css/main_v20211012.css"/>
 <style type="text/css">
 
 </style>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -38,7 +37,7 @@ $(function(){
 		if(evt.which == 13){
 			chkNull();
 		}//end if
-	});
+	}); 
 });//ready
 function chkNull(){
 	$("ok").remove;
@@ -60,14 +59,14 @@ function chkNull(){
 }//chkNull
 function sendId(user_id){
 	//부모창으로 아이디 전달
-	opener.window.document.frm.user_id.value=user_id;
+	opener.window.document.frm.user_id.value="${param.user_id}";
 	//자식창 닫기
 	self.close();
 }//sendId
 </script>
 </head>
 <body>
-<form action="../id_dup_proc.do" method="get" id="frm">
+<form action="id_dup_proc.do" method="get" id="frm">
 <h2 style="text-align:center; color:#D09869; margin:30px 0;font-weight: bold; font-family: 'Sunflower', sans-serif;">아이디중복확인</h2>
 <!--  웹 브라우저에 키 입력이 가능한 Form Control이 하나만 제공되나면
 자바스크립트 코드를 정의하지 않아도 엔터를 쳤을 때 back-end로 전송된다. -->
@@ -78,36 +77,27 @@ function sendId(user_id){
 	<input type="button" class="btn btn-default btn-sm" value="중복확인" id="btn" style="color: #FFFFFF; background:#D09869; height:40px;"/><br/>
 </div>
 <div style="margin-left: 30px; font-size:13px;">영문 대소문자와 숫자 5~12자리로 입력할 수 있습니다.</div>
-<c:if test="${ not empty param.user_id }">
-<!-- id라는 파라메터가 존재하면 입력된 아이디를 사용하여 DBTable에 아이디가 존재하는지 조회-->
-<div>
-<%
-	//입력된 id를 받는다
-	String user_id=request.getParameter("user_id");
-	//DB검증
-	User_DAO uDAO=new User_DAO();
-	String resultId=uDAO.idSearch(user_id);
-	//검증결과 출력
-	pageContext.setAttribute("resultId",resultId);
-%>
-<span style="color:#0D569F;font-weight:bold; margin-left:30px;">
-	입력하신 <c:out value="${ param.user_id }"/>
-</span>는
-<c:choose>
-	<c:when test="${ empty resultId }">
-		<span id="ok" style="color:#0D569F;font-weight:bold;">
-			사용 가능합니다.
-		</span>
-		[<a href="javascript:sendId('${ param.user_id }')">사용</a>]
-	</c:when>
-	<c:otherwise>
-		<span id="no" style="color:#D75043;font-weight:bold;">
-		이미 사용중입니다.
-		</span>
-	</c:otherwise>
-</c:choose>
-</div>
-</c:if>
+<c:if test="${ not empty param.user_id }"> 
+	<!-- id라는 파라메터가 존재하면 입력된 아이디를 사용하여 DBTable에 아이디가 존재하는지 조회-->
+	<div>
+		<span style="color:#0D569F;font-weight:bold; margin-left:30px;">
+			입력하신 <c:out value="${ param.user_id }"/> 
+		</span>는
+		<c:choose>
+			<c:when test="${ empty user_id }">
+				<span id="ok" style="color:#0D569F;font-weight:bold;">
+					사용 가능합니다.
+				</span>
+				[<a href="javascript:sendId('${ user_id }')">사용</a>]
+			</c:when>
+			<c:otherwise>
+				<span id="no" style="color:#D75043;font-weight:bold;">
+				이미 사용중입니다.
+				</span>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</c:if> 
 </form>
 </body>
 </html>
