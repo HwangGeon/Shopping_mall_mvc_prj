@@ -65,18 +65,18 @@
 	<c:if test="${ searchValue ne null }">
 		<h2 class="title">'${ searchValue }' 검색 결과</h2>
 	</c:if>
-
+	
 </div>
 	<div class="container px-4 px-lg-5 mt-5">
 		<div
 			class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
 			<!-- 상품 -->
-			
+		
 		<c:if test="${  proCnt ne null }">
 			<c:forEach var="pro" items="${ proData }">
 			<c:set var="i" value="${ i+1 }"/>
 			<div class="col mb-5">
-			<a href="http://localhost/shopping_mall/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
+			<a href="http://localhost/shopping_mall/board/prod_detail.do?pro_cd=${ pro.pro_cd }" id="pro">
 				<div class="card h-100" id="pro">
 					<!-- Product image-->
 					<img class="card-img-top"
@@ -101,27 +101,82 @@
 	<!-- 페이징 -->	
  	<nav aria-label="Page navigation example">
 		<ul class="pagination pagination justify-content-center">
-			<c:if test="${ startPage eq 1 }">
+			<c:if test="${ ppVO.startPage eq 1 }">
 			<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1"
 				aria-disable="true">Previous </a></li>
 			</c:if>
-			<c:if test="${ startPage ne 1 }">
-			<li class="page-item"><a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=searchValue=&page="
+			<c:if test="${ ppVO.startPage ne 1 }">
+			<%-- <c:if test="${ category_cd ne null }">
+			<li class="page-item"><a class="page-link" href=
+			"http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ ppVO.startPage-1 }"
 				 tabindex="-1" aria-disable="true">Previous </a></li>
 			</c:if>
-
+			<c:if test="${ searchValue ne null }">
+			<li class="page-item"><a class="page-link" href=
+			"http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ ppVO.startPage-1 }"
+				 tabindex="-1" aria-disable="true">Previous </a></li>
+			</c:if> --%>
+			<c:choose>
+			<c:when test="${ searchValue ne null }">
+			<li class="page-item"><a class="page-link" href=
+			"http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ ppVO.startPage-1 }"
+				 tabindex="-1" aria-disable="true">Previous </a></li>
+			</c:when>
+			<c:otherwise>
+			<li class="page-item"><a class="page-link" href=
+			"http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ ppVO.startPage-1 }"
+				 tabindex="-1" aria-disable="true">Previous </a></li>
+			</c:otherwise>
+			</c:choose>
+			</c:if>
+			
+			<c:forEach var="i" begin="${ ppVO.startPage }" end="${ ppVO.endPage }" step="1">
+			<c:choose>
+			<c:when test="${ i eq ppVO.cPage }">
 			<li class="page-item active">
-			<a class="page-link my" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=searchValue=&page="></a></li>
-
+			</c:when>
+			<c:otherwise>
+			<li class="page-item">			
+			</c:otherwise>
+			</c:choose>
+			<%-- <c:if test="${ category_cd ne null }">
+			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ i }">${ i }</a></li>
+			</c:if>
+			<c:if test="${ searchValue ne null }">
+			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ i }">${ i }</a></li>
+			</c:if> --%>
+			<c:choose>
+			<c:when test="${ searchValue ne null }">
+			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ i }">${ i }</a></li>
+			</c:when>
+			<c:otherwise>
+			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ i }">${ i }</a></li>
+			</c:otherwise>
+			</c:choose>
+			</c:forEach>
+			
+			<c:choose>
+			<c:when test="${ ppVO.totalPages eq ppVO.endPage }">
 			<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
-
+			</c:when>
+			<c:otherwise>
+			<c:choose>
+ 			<c:when test="${ searchValue ne null }">
 			<li class="page-item"><a class="page-link" 
-			href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=searchValue=&page=">Next</a></li>
+			href="http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ ppVO.endPage + 1 }">Next</a></li>
+			</c:when>
+			<c:otherwise>
+			<li class="page-item"><a class="page-link" 
+			href="http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ ppVO.endPage + 1 }">Next</a></li>
+			</c:otherwise>
+			</c:choose>
+			</c:otherwise>
+			</c:choose>
 
 		</ul>
 	</nav> 
 	</c:if>
-		<c:if test="${ empty proCnt }">
+		<c:if test="${ proCnt eq null }">
 			<div id="last">해당 상품이 존재하지 않습니다.</div>
 		</c:if>
 </section>

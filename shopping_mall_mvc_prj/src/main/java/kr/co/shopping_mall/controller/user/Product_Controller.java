@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import kr.co.shopping_mall.service.user.Product_Service;
 import kr.co.shopping_mall.vo.ProductPagingVO;
 import kr.co.shopping_mall.vo.ProductParamVO;
+import kr.co.shopping_mall.vo.ProductVO;
 
 @Controller
 public class Product_Controller {
@@ -20,32 +22,20 @@ public class Product_Controller {
 	
 	@RequestMapping(value="board/prod_list.do", method=GET)
 	public String prodList(ProductParamVO paramVO, Model model){
-		ProductPagingVO ppVO=null;
 		model.addAttribute("category_cd", paramVO.getCategory_cd());
 		model.addAttribute("searchValue", paramVO.getSearchValue());
 		
 		try {
+			model.addAttribute("ppVO", ps.setPaging(paramVO));
 			model.addAttribute("proData", ps.getProdList(paramVO));
-			if(paramVO.getCategory_cd() == 0) {
-				model.addAttribute("proCnt",ps.getSearchProdListCount(paramVO.getSearchValue()));
-			}else {
-				model.addAttribute("proCnt", ps.getProdListCount(paramVO.getCategory_cd()));
-			}
-			
-			ppVO=ps.setPaging(paramVO);
-			model.addAttribute("cPage",ppVO.getcPage());
-			model.addAttribute("startPage",ppVO.getStartPage());
-			model.addAttribute("endPage",ppVO.getEndPage());
-			model.addAttribute("totalPages",ppVO.getTotalPages());
+			model.addAttribute("proCnt", ps.getProdCount(paramVO));
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} catch(NullPointerException npe) {
-			npe.printStackTrace();
-		}
-		
+		}//end catch
 		
 		return "board/prod_list";
 	}//getProdList
+	
 	
 	@RequestMapping(value="board/prod_detail.do", method=GET)
 	public String prodDetail(String pro_cd, Model model) {
