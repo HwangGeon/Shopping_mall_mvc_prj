@@ -1,7 +1,7 @@
 <%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
 <%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" info="회원정보수정"%>
+    pageEncoding="UTF-8" info="회원탈퇴"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -114,54 +114,44 @@ $(function(){
 function goBack(){
    location.href="http://localhost/shopping_mall/views/user/infoUpdateForm.do";
 }
-
+<c:if test="${ not empty msg }">
+alert("${ msg }");
+</c:if>
 </script>
 <body>
    <jsp:include page="../layout/header.jsp"/>
 <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ 
-   
- response.sendRedirect("http://localhost/shopping_mall/user/login/loginForm.do?err_flag=1");
+if(user_id==null){
+ response.sendRedirect("http://localhost/shopping_mall/user/login/loginForm.do.do?err_flag=1");
  return;
 }//end if %> 
-<% 
-request.setCharacterEncoding("UTF-8");
-%>
-<jsp:useBean id="uVO" class="kr.co.shopping_mall.vo.UserVO" scope="page"/>
-<jsp:setProperty property="*" name="uVO"/>
      &nbsp;<div class="dl" >
-           <a href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
-           <a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
+           <a href="http://localhost/shopping_mall/views/user/myOrder.do"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
+           <a href="http://localhost/shopping_mall/views/user/myInfo.do"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="delFrm" name="delFrm" action="http://localhost/shopping_mall_prj/views/user/delete_proc.jsp" method="post">
+     <form id="delFrm" name="delFrm" action="member/delete_proc.do" method="post">
       <div align="center" style="color: #D09869; margin-bottom: 5%;">
          <div style="width: 35%;">
          <h2 id="title2">회원 탈퇴</h2>
             <div class="container3">
-               <!-- <label style="padding-right: 7%;">아이디</label> --> <input
-                  type="text" class="passInput" readonly="readonly" placeholder="<%= user_id%>"/>
+               <input type="text" class="passInput" readonly="readonly" placeholder="<%= user_id%>"/>
             </div>
             <div class="container3">
-               <!-- <label style="padding-right: 4%;">비밀번호</label>  --><input
-                  type="password" class="passInput" id="user_pw" name="user_pw" placeholder="비밀번호"/>
+               <input type="password" class="passInput" id="user_pw" name="user_pw" placeholder="비밀번호"/>
             </div>
             <div class="container3">
-               <!-- <label style="padding-right: 2%;">비밀번호 확인</label> --> <input
-                  type="password" class="passInput" id="user_pw2" name="user_pw" placeholder="비밀번호 확인"/>
+               <input type="password" class="passInput" id="user_pw2" name="user_pw" placeholder="비밀번호 확인"/>
             </div>
          </div>
       </div>
-
-     
-     <p style="text-align:center;"><!-- 56px -->
+     <p style="text-align:center;">
        <button type="button" class="btn btn-default btn-lg" id="backBtn" onclick="goBack()">돌아가기</button>
        <button type="button" class="btn btn-default btn-lg" id="outBtn">탈퇴하기</button>
    </p>
      </form>
-   
    <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
