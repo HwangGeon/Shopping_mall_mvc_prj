@@ -1,4 +1,4 @@
-<%-- <%@page import="kr.co.shopping_mall.vo.UserInfoVO"%>
+<%-- 0<%@page import="kr.co.shopping_mall.vo.UserInfoVO"%>
 <%@page import="kr.co.shopping_mall.dao.user.User_DAO"%>
 <%@page import="kr.co.shopping_mall.vo.DeliveryVO"%>
 <%@page import="kr.co.shopping_mall.vo.ProductVO"%>
@@ -38,10 +38,9 @@ if(user_id==null){
  response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
  return;
 }//end if %> 
+
 <%
-	request.setCharacterEncoding("UTF-8");
-	ArrayList<ProductVO> cart=null;
-	
+	ArrayList<ProductVO> cart=null;	
 	Object obj=session.getAttribute("cart");
 	if(obj==null){//세션정보가 없으면 배열을 생성
 		cart = new ArrayList<ProductVO>();
@@ -100,6 +99,9 @@ if(user_id==null){
     } 
 </style>
 <script type="text/javascript">
+<c:if test="${ not empty msg }">
+alert("${ msg }");
+</c:if>
 $(function(){
 	$("#dv_tel").focusout(function(){
 		telValidator($(this).val()); 
@@ -221,4 +223,4 @@ function buy(){
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
- --%>
+  --%>

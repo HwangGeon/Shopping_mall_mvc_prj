@@ -60,7 +60,7 @@ public class User_Controller {
 	}
 	
 	  @RequestMapping(value = "member/userJoin.do", method = POST)
-	  public String userJoin(@ModelAttribute @Valid  UserVO uVO) {
+	  public String userJoin(UserVO uVO) {
 		 us.addMember(uVO);
 		 return "user/joinCompl";
 	  }

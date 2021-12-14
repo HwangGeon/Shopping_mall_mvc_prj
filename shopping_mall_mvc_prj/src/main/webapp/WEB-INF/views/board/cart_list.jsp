@@ -1,4 +1,4 @@
-<%@page import="kr.co.shopping_mall.vo.ProductVO"%>
+<%-- <%@page import="kr.co.shopping_mall.vo.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>장바구니</title>
 <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -37,7 +37,7 @@
 	}else{ //세션정보가 있으면 강제로 캐스팅 
 		cart=(ArrayList<ProductVO>)obj;
 	}
-%>
+%> 
 </head>
 <style>
 	h2{
@@ -77,17 +77,8 @@
     .btn3:hover{color:#FFFFFF;}
 </style>
 <script type="text/javascript">
-/* function selectAll(selectAll)  {
-	  const checkboxes 
-	       = document.getElementsByName('item');
-	  
-	  checkboxes.forEach((checkbox) => {
-	    checkbox.checked = selectAll.checked;
-	  })
-	} */
-
 function fnGo(){
-	location.href="../index.jsp";
+	location.href="http://localhost/shopping_mall/index.do";
 }
 function fnBuy(){
 	if(<%=cart.size()%>==0){
@@ -122,13 +113,34 @@ function cartRemove( pro_cd, pro_name ){
 		                <col style="width: 15%" />
 		            </colgroup>
 		            <tr>             
-		                <!-- <th><input type="checkbox" name="product" onclick="selectAll(this)"></th> -->   
 		                <th></th>   
 		                <th>상품명</th>
 		                <th>수량</th>
 		                <th>가격</th>
 		                <th></th>
 		            </tr>
+		            <c:if test="${cart.size() }==0">
+		            <tr>
+		            	<td colspan= '5'>장바구니에 담긴 상품이 없습니다.</td>
+		            </tr>
+		            </c:if>
+		            <c:otherwise>
+		            	<c:set var="totalSum" value=0/>
+		            	<c:set var="total" value=0/>
+		            	<% DecimalFormat df = new DecimalFormat("###,###,###,##0");%>
+		            	<c:forEach var="pv" items="${ cart }">
+		            	<tr>
+		            		<td><img src='http://localhost/shopping_mall/common/uploadImg/pro_img/" + pv.getPro_img() + "' width='100' height='100'></td>
+		            		<td> pv.getPro_name()</td>
+		            		<td> pv.getCnt()</td>
+		            		<td> pv.getPro_name()</td>
+		            		<c:set var="total" value=pv.getPro_price() * pv.getCnt()/>
+		            		<td> df.format(total)</td>
+		            		<td><input type='button' value='삭제' id='btnDel' onclick='cartRemove(\""+ pv.getPro_cd()+"\",\""+pv.getPro_name()+"\")'/></td>
+		            		</tr>
+		            		<c:set var="totalSum" value=pv.getPro_price() * pv.getCnt()/>
+		            	</c:forEach>
+		            </c:otherwise>
 		            <% 
 		            if(cart.size()==0){
 		            	out.println("<tr>");
@@ -142,8 +154,34 @@ function cartRemove( pro_cd, pro_name ){
 		    			for(int i = 0; i < cart.size(); i++) {
 		    				ProductVO pv = cart.get(i);
 		    				out.println("<tr>");
-		    					/* out.println("<td><input type='checkbox' name='item' value='"+pv.getPro_cd()+"'></td>"); */
-		    					out.println("<td><img src='http://localhost/shopping_mall_prj/common/uploadImg/pro_img/" + pv.getPro_img() + "' width='100' height='100'></td>");
+		    					out.println("<td><img src='http://localhost/shopping_mall/common/uploadImg/pro_img/" + pv.getPro_img() + "' width='100' height='100'></td>");
+		    					out.println("<td>" + pv.getPro_name() + "</td>");
+		    					out.println("<td>" + pv.getCnt() + "</td>");
+		    					total = pv.getPro_price() * pv.getCnt();
+		    					out.println("<td>" + df.format(total) + "</td>");
+		    					out.println("<td><input type='button' value='삭제' id='btnDel' onclick='cartRemove(\""+ pv.getPro_cd()+"\",\""+pv.getPro_name()+"\")'/></td>");
+		    					
+		    				
+		    				out.println("</tr>");
+		    				totalSum += total;
+		    			}
+		    				out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");			           		
+		            }
+		    		%>	
+		            <% 
+		            if(cart.size()==0){
+		            	out.println("<tr>");
+						out.println("<td colspan= '5'>");
+							out.println("장바구니에 담긴 상품이 없습니다.");
+						out.println("</td>");
+					out.println("</tr>");    
+		            } else {
+		    			int totalSum = 0, total = 0;
+		    			DecimalFormat df = new DecimalFormat("###,###,###,##0");
+		    			for(int i = 0; i < cart.size(); i++) {
+		    				ProductVO pv = cart.get(i);
+		    				out.println("<tr>");
+		    					out.println("<td><img src='http://localhost/shopping_mall/common/uploadImg/pro_img/" + pv.getPro_img() + "' width='100' height='100'></td>");
 		    					out.println("<td>" + pv.getPro_name() + "</td>");
 		    					out.println("<td>" + pv.getCnt() + "</td>");
 		    					total = pv.getPro_price() * pv.getCnt();
@@ -167,9 +205,10 @@ function cartRemove( pro_cd, pro_name ){
 		</p>
         </div>
         </form>
-        <form action="removeCart.jsp" method="post" id="cartDelFrm">
+        <form action="board/removeCart.do" method="post" id="cartDelFrm">
          <input type="hidden" name="pro_cd" id="pro_cd">
         </form>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
+ --%>

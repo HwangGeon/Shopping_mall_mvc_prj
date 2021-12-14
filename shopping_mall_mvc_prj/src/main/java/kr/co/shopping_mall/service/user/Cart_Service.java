@@ -56,4 +56,17 @@ public class Cart_Service {
 		
 		return cart;
 	}
-}
+	
+	public ArrayList<ProductVO> getCartSession(HttpSession session) throws SQLException{
+		ArrayList<ProductVO> cart=null;
+		
+		Object obj=session.getAttribute("cart");
+
+		if(obj==null){
+			cart=new ArrayList<ProductVO>();
+		}else{
+			cart=(ArrayList<ProductVO>)obj;
+		}//end else
+		return cart;
+	}//addCartSession
+}//class

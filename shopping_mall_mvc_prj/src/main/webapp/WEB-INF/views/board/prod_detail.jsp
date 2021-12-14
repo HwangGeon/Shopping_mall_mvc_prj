@@ -146,16 +146,19 @@ $(function(){
 
 
 function moveCart(){
-	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp"
+	location.href="http://localhost/shopping_mallj/views/board/cart_list.do";
 	/* location.href="http://localhost/shopping_mall_prj/views/board/test.jsp" */
 }
 
 function addCart(){
 	if(confirm("장바구니에 담으시겠습니까?")){
 		location.href="http://localhost/shopping_mall/board/cart_proc.do?pro_cd=${ proData.pro_cd }&cnt=" + document.getElementById("numBox").value;
+/* 		location.href="http://localhost/shopping_mall/board/cart_proc.do?pro_cd=${ proData.pro_cd }&cnt=" + document.getElementById("numBox").value; */
 	}//end if
 }
-
+<c:if test="${ not empty msg }">
+alert("${ msg }");
+</c:if>
 </script>
 <body>
 <jsp:include page="../layout/header.jsp"/>
