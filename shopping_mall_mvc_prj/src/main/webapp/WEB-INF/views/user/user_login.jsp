@@ -113,7 +113,7 @@ alert("로그인이 필요한 페이지입니다.");//실행
          </div>
          <button type="button" id="login" class="btn btn-default btn-lg">로그인</button>
          <input type="button" id="join"class="btn btn-default btn-lg" value="회원가입" onclick="location.href='http://localhost/shopping_mall/user/member/joinForm.do'"/>
-         <a class="idpwFind" href="http://localhost/shopping_mall_prj/views/help/idpwFind.jsp">아이디/비밀번호 찾기</a>
+         <a class="idpwFind" href="http://localhost/shopping_mall/help/idpwFind.do">아이디/비밀번호 찾기</a>
       </form>
    </div> 
 </body>
