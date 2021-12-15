@@ -2,58 +2,6 @@
     pageEncoding="UTF-8"
     info="마이페이지_주문내역"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
-	</script>
-<%}//end if
-
-if(user_id!=null){
-//user_id값을 통한 주문정보조회
-OrderDAO od=new OrderDAO();
-List<OrderInfoVO> list=od.selectOrder(user_id);
-
-/* //pro_name에 ordd_qty 더하기(test1 1개)
-for(int i=0; i < list.size(); i++){
-	list.get(i).setPro_name(list.get(i).getPro_name() + " " + list.get(i).getOrdd_qty() + "개");
-}//end for */
-
-
-//ord_cd가 같은게 존재하면 pro_name에 += pro_name 
-String cur_ord_cd="";
-if(list.size() > 0){
-	cur_ord_cd=list.get(0).getOrd_cd();
-}
-int flagNum=0;
-int cnt=0;
-for(int i=1; i < list.size(); i++){
-	if(cur_ord_cd.equals(list.get(i).getOrd_cd())){
-		list.get(i).setOrd_cd("xxx");
-		cnt+=1;
-	}else{
-		if(cnt != 0){
-			list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
-		}//end if
-		cur_ord_cd=list.get(i).getOrd_cd();
-		flagNum=i;
-		cnt=0;
-	}//end else
-	if(i==list.size()-1){
-		if(cnt != 0){
-			list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
-		}//end if
-	}//end if
-}//end for 
-
-pageContext.setAttribute("orderData", list);
-pageContext.setAttribute("dataCnt", list.size());
-}
-%> --%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -213,7 +161,7 @@ $(function(){
 </script>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
-	<form id="OrderFrm" method="post" action="http://localhost/shopping_mall_prj/views/user/myOrder_proc.jsp">
+	<form id="OrderFrm" method="post" action="http://localhost/shopping_mall/user/myOrder_proc.do">
         <div class="container">
         &nbsp;<div class="dl">
         	<a href="myOrder.do"><div class="dt"><h3 id="dt">주문내역</h3></div></a>
@@ -235,14 +183,14 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
-			<c:if test="${ dataCnt > 0 }">
+			<c:if test="${ dataCnt ne null }">
             <c:forEach var="ord" items="${ orderData }">
             <c:if test="${ ord.ord_cd ne 'xxx' }">
             <tr>
 				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"
 					<c:if test="${ ord.ord_stat_name ne '주문완료' }"> disabled="disabled"</c:if>
 				></td>
-				<td class="orderInfo" colspan="3"><a id="colNone" href="order_detail.jsp?ord_cd=${ ord.ord_cd }"><strong>${ ord.pro_name }</strong></a></td>
+				<td class="orderInfo" colspan="3"><a id="colNone" href="order_detail.do?ord_cd=${ ord.ord_cd }"><strong>${ ord.pro_name }</strong></a></td>
 			</tr>
 			<tr>
 				<td class="orderInfo" colspan="3">주문번호 : ${ ord.ord_cd }</td>
@@ -259,7 +207,7 @@ $(function(){
             </c:if>
             </c:forEach>
             </c:if>
-            <c:if test="${ dataCnt == 0 }">
+            <c:if test="${ dataCnt eq null }">
             	<tr>
             		<td colspan="4" id="emptyList">주문내역이 없습니다.</td>
             	</tr>
