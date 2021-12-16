@@ -1,27 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="마이페이지_개인정보"%>
-<%-- <%
-//session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
-
-if(user_id==null){ 
-	response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
-	return;
-}//end if %>
-<%
-
-//user_id값을 통한 개인정보조회
-UserDAO ud=new UserDAO();
-UserInfoVO uv=ud.selectInfo(user_id);
-
-//개인정보 복호화
-DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
-uv.setUser_name(dd.decryption(uv.getUser_name()));
-uv.setUser_email(dd.decryption(uv.getUser_email()));
-uv.setUser_tel(dd.decryption(uv.getUser_tel()));
-
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +10,7 @@ uv.setUser_tel(dd.decryption(uv.getUser_tel()));
 <title>마이페이지_개인정보</title>
 
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="회원정보수정완료"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원정보수정완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -33,14 +34,19 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 </style>
 <script type="text/javascript">
 function moveMain(){
-	location.href="http://localhost/shopping_mall_prj/views/index.jsp";
+	location.href="http://localhost/shopping_mall/index.do";
 }
+
+<c:if test="${ empty flag }">
+alert("비밀번호를 알맞게 입력해주세요.");
+location.href="http://localhost/shopping_mall/user/infoUpdateForm.do";
+</c:if>
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 	
 		<div id="wrap" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">                          
-			<img src="http://localhost/shopping_mall_prj/common/image/check.png"><br/>
+			<img src="http://localhost/shopping_mall/common/image/check.png"><br/>
 			<div>
 				<h2 class="join">회원정보가 수정되었습니다.</h2>
 				<div class="msg">변경된 사항은 마이페이지에서 확인 하실 수 있습니다.</div>

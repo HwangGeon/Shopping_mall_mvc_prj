@@ -44,6 +44,9 @@ public class OrderInfo_Controller {
 			return "user/myOrder_proc";
 		}//end if
 		
+		//체크된 항목 주문취소로 변경
+		
+		
 		return "user/myOrder";
 	}//cancelOrder
 	

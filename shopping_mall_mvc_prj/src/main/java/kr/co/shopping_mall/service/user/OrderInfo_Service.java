@@ -15,6 +15,7 @@ public class OrderInfo_Service {
 	@Autowired
 	private OrderInfo_DAO oid;
 	
+	//주문정보조회
 	public List<OrderInfoVO> getOrderList(String user_id) throws SQLException{
 		List<OrderInfoVO> list=null;
 		
@@ -48,5 +49,16 @@ public class OrderInfo_Service {
 		
 		return list;
 	}//getOrderList
+	
+	//주문취소로 변경
+	public int changeOrderState(String[] chk) {
+		int cnt=0;
+		
+		for(int i=0; i < chk.length; i++){
+			oid.updateOrderInfo(chk[i]);
+		}//end for
+		
+		return cnt;
+	}//changeOrderState
 	
 }//class

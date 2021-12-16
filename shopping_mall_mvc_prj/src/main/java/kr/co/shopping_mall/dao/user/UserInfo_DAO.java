@@ -15,7 +15,7 @@ public class UserInfo_DAO {
 	@Autowired(required = false)
 	private JdbcTemplate jt;
 	
-	//마이페이지_개인정보 페이지 개인정보 조회
+	//개인정보 조회
 	public UserInfoVO selectInfo(String user_id)throws SQLException{
 		UserInfoVO uv=null;
 		
@@ -53,5 +53,15 @@ public class UserInfo_DAO {
 		
 		return cnt;
 	}//updatePass
+	
+	//개인정보수정
+	public int updateInfo(String user_id, String email, String addr) throws SQLException{
+		int cnt=0;
+		
+		String infoUpdate="update users set user_email=?, user_addr=? where user_id=?";
+		cnt=jt.update(infoUpdate, email, addr, user_id);
+
+		return cnt;
+	}//updateInfo
 	
 }//class

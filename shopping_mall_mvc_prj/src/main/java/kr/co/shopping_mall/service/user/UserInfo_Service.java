@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.shopping_mall.dao.user.UserInfo_DAO;
+import kr.co.shopping_mall.vo.UserInfoParamVO;
 import kr.co.shopping_mall.vo.UserInfoVO;
 import kr.co.sist.util.cipher.DataDecrypt;
 import kr.co.sist.util.cipher.DataEncrypt;
@@ -56,6 +57,32 @@ public class UserInfo_Service {
 		return flag;
 	}//doPwUpdate
 	
+	//개인정보수정
+	public int updateInfo(String user_id, String user_email, String user_addr) throws SQLException, UnsupportedEncodingException, NoSuchAlgorithmException, GeneralSecurityException {
+		user_email=encryptInputData(user_email);
+		int cnt=uid.updateInfo(user_id, user_email, user_addr);
+		
+		return cnt;
+	}//updateInfo
+	
+	//비밀번호 조회
+	public String searchPw(String user_id, String user_pw) throws SQLException, NoSuchAlgorithmException {
+		String flag="f";
+		
+		UserInfoVO uv=uid.selectInfo(user_id);
+
+		//현재 비밀번호 암호화
+		String encryptPw=encryptInputPw(user_pw);
+		//조회된 비밀번호
+		String searchPw=uv.getUser_pw();
+		
+		if(encryptPw.equals(searchPw)){
+			flag="t";
+		}//end if
+		
+		return flag;
+	}//searchPw
+	
 	//비밀번호암호화
 	public String encryptInputPw(String pw) throws NoSuchAlgorithmException {
 		String encryptPw="";
@@ -63,6 +90,14 @@ public class UserInfo_Service {
 				
 		return encryptPw;
 	}//encryptInputPw
+	
+	//개인정보암호화(복호화가능)
+	public String encryptInputData(String data) throws UnsupportedEncodingException, NoSuchAlgorithmException, GeneralSecurityException {
+		DataEncrypt de=new DataEncrypt("AbcdEfgHiJkLmnOpQ");
+		String encryptData=de.encryption(data);
+		
+		return encryptData;
+	}//encryptInputData
 	
 	//복호화
 	public String decryptInputData(String data) throws UnsupportedEncodingException, NoSuchAlgorithmException, GeneralSecurityException {

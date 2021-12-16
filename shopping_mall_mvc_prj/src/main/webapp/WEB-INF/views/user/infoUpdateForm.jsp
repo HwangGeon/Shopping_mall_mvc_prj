@@ -1,11 +1,7 @@
-<%-- <%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
-<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
-<%@page import="kr.co.shopping_mall.model.UserInfoVO"%>
-<%@page import="kr.co.shopping_mall.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="회원정보수정"%>
 <!DOCTYPE html>
-<%
+<%-- <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
 
@@ -24,7 +20,7 @@ if(user_id==null){
 	uv.setUser_name(dd.decryption(uv.getUser_name()));
 	uv.setUser_email(dd.decryption(uv.getUser_email()));
 	uv.setUser_tel(dd.decryption(uv.getUser_tel()));	
-%>
+%> --%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -32,7 +28,7 @@ if(user_id==null){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원정보수정</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -128,23 +124,23 @@ function userDelete(user_id){
 }
 
 function goBack(){
-	location.href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp";
+	location.href="http://localhost/shopping_mall/user/myInfo.do";
 }
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
      &nbsp;<div class="dl" >
-        	<a href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
-        	<a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
+        	<a href="http://localhost/shopping_mall/user/myOrder.do"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
+        	<a href="http://localhost/shopping_mall/user/myInfo.do"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="infoUpdateFrm" action="http://localhost/shopping_mall_prj/views/user/infoUpdate_proc.jsp" method="post">
+     <form id="infoUpdateFrm" action="http://localhost/shopping_mall/user/infoUpdateCompl.do" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
 			<div style="width: 30%;">
 			<h2 id="title">회원정보 수정</h2>
 				<div class="container3">
 					<label style="padding-right: 7%;">아이디</label> <input
-						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_id()%>"/>
+						type="text" class="passInput" readonly="readonly" placeholder="${ uVO.user_id }"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 4%;">비밀번호</label> <input
@@ -152,19 +148,19 @@ function goBack(){
 				</div>
 				<div class="container3">
 					<label style="padding-right: 9.5%;">이름</label> <input
-						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_name()%>"/>
+						type="text" class="passInput" readonly="readonly" placeholder="${ uVO.user_name }"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 1.5%;">휴대폰번호</label> <input
-						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_tel()%>"/>
+						type="text" class="passInput" readonly="readonly" placeholder="${ uVO.user_tel }"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 7%;">이메일</label> <input
-						type="text" class="passInput" name="user_email" value="<%= uv.getUser_email() %>"/>
+						type="text" class="passInput" name="user_email" value="${ uVO.user_email }"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 9.5%;">주소</label> <input
-						type="text" class="passInput" name="user_addr" value="<%= uv.getUser_addr() %>"/>
+						type="text" class="passInput" name="user_addr" value="${ uVO.user_addr }"/>
 				</div>
 			</div>
 		</div>
@@ -181,4 +177,4 @@ function goBack(){
         </form>
 	<jsp:include page="../layout/footer.jsp"/>
 </body>
-</html> --%>
+</html>
