@@ -1,4 +1,4 @@
-<%-- 0<%@page import="kr.co.shopping_mall.vo.UserInfoVO"%>
+<%@page import="kr.co.shopping_mall.vo.UserInfoVO"%>
 <%@page import="kr.co.shopping_mall.dao.user.User_DAO"%>
 <%@page import="kr.co.shopping_mall.vo.DeliveryVO"%>
 <%@page import="kr.co.shopping_mall.vo.ProductVO"%>
@@ -8,6 +8,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="구매하기"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>구매하기</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -30,32 +31,9 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ 
-	
- response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
- return;
-}//end if %> 
-
-<%
-	ArrayList<ProductVO> cart=null;	
-	Object obj=session.getAttribute("cart");
-	if(obj==null){//세션정보가 없으면 배열을 생성
-		cart = new ArrayList<ProductVO>();
-	}else{ //세션정보가 있으면 강제로 캐스팅 
-		cart=(ArrayList<ProductVO>)obj;
-	}
-	ArrayList<DeliveryVO> delivery= new ArrayList<DeliveryVO>();
-	//String user_id=(String)session.getAttribute("user_id");
-	User_DAO uDAO= new User_DAO();
-	UserInfoVO uVO = uDAO.selectInfo(user_id);
-	//개인정보 복호화
-	DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
-	uVO.setUser_name(dd.decryption(uVO.getUser_name()));
-	uVO.setUser_tel(dd.decryption(uVO.getUser_tel()));
-%>
+<c:if test="${sessionScope.user_id eq null }">
+<c:redirect url="http://localhost/shopping_mall/user/login/loginForm.do?err_flag=1"/>
+</c:if> 
 <style type="text/css">
 	form h2:nth-child(1){margin-top:100px;} 
 	h2{text-align:left; color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif; margin:0 0 40px 0;} 
@@ -97,6 +75,8 @@ if(user_id==null){
 	p button:nth-child(2){
     	background:#D09869; color:#FFFFFF; border-color:#FFFFFF;
     } 
+    #btn1:hover{color:#D09869;}
+    #buy:hover{color:#FFFFFF;}
 </style>
 <script type="text/javascript">
 <c:if test="${ not empty msg }">
@@ -144,7 +124,7 @@ function telValidator(args) {
     }
 }//telValidator 
 function goCart(){
-	location.href="http://localhost/shopping_mall/views/board/cart_list.do";
+	location.href="http://localhost/shopping_mall/board/cart_list.do";
 }
 function buy(){
 	$("#frm").submit();
@@ -154,7 +134,7 @@ function buy(){
 <body>   
 <jsp:include page="../layout/header.jsp"/>
 
-	<form name="frm" id="frm" method="post" action="buyCompl.jsp">
+	<form name="frm" id="frm" method="post" action="buyCompl.do">
         <div class="container">
 	        <h2>주문서 작성</h2>         
 	        <div class="table-responsive">
@@ -168,15 +148,15 @@ function buy(){
 		              </tr>
 		              <tr>
 		              	<td>받는사람</td>
-		              	<td><input type="text" name="dv_name" id="dv_name" value="<%= uVO.getUser_name()%>"></td>
+		              	<td><input type="text" name="dv_name" id="dv_name" value="${  uVO.user_name}"></td>
 		              </tr>
 		              <tr>
 		              	<td>휴대전화</td>
-		              	<td><input type="text" name="dv_tel" id="dv_tel" value="<%= uVO.getUser_tel()%>"></td>
+		              	<td><input type="text" name="dv_tel" id="dv_tel" value="${  uVO.user_tel}"></td>
 		              </tr>
 		              <tr>
 		              	<td>주소</td>
-		              	<td><input type="text" name="dv_addr" id="dv_addr" value="<%= uVO.getUser_addr()%>"></td>
+		              	<td><input type="text" name="dv_addr" id="dv_addr" value="${  uVO.user_addr}"></td>
 		              </tr>
 		              <tr>
 		              	<td>배송메모</td>
@@ -185,37 +165,48 @@ function buy(){
 		        </table>
 	        </div>
 	        <div class="table-responsive">
-		 		<table class="table table-borderless" id="tbl-product">
+		        <table class="table table-borderless" id="tbl-product">
 		            <colgroup>
-		                <col style="width: 55%" />
-		                <col style="width: 15%" />
 		                <col style="width: 20%" />
+		                <col style="width: 35%" />
+		                <col style="width: 10%" />
+		                <col style="width: 10%" />
+		                <col style="width: 15%" />
 		            </colgroup>
 		            <tr>             
+		                <th></th>   
 		                <th>상품명</th>
 		                <th>수량</th>
-		                <th>가격</th> 
+		                <th>가격</th>
+		                <th></th>
 		            </tr>
-		           	<%
-		            int totalSum = 0, total = 0;
-		    		DecimalFormat df = new DecimalFormat("###,###,###,###,##0");
-	    			for(int i = 0; i < cart.size(); i++) {
-	    				ProductVO pv = cart.get(i);
-	    				out.println("<tr>");
-	    					out.println("<td>" + pv.getPro_name() + "</td>");
-	    					out.println("<td>" + pv.getCnt() + "</td>");
-	    					total = pv.getPro_price() * pv.getCnt();
-	    					out.println("<td>" + df.format(total) + "</td>");
-	    				out.println("</tr>");
-	    				totalSum += total;
-	    			}
-		    				out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");			           		
-		            
-		    		%>	
+		            <c:choose>
+		            <c:when test="${ cart.size() ne  0}">
+		            	<c:set var="size" value="${ cart.size() }"/>
+		            	<c:forEach var="pv" items="${ cart }">
+		            	<c:set var="i" value="${ i+1 }"/>
+		            	<tr>
+		            		<td><img src="http://localhost/shopping_mall/common/uploadImg/pro_img/${ pv.pro_img }" style="width:100px; height:100px;"/></td>
+		            		<td> ${pv.pro_name }</td>
+		            		<td>${pv.cnt }</td>
+		            		<c:set var="total" value="2"/>
+							<td> ${pv.pro_price_fmt}</td>
+		            		</tr>
+		            	</c:forEach>
+		            		<tr>
+		          			  <td id='total' colspan='5'>총 주문금액 :${ cart[size-1].pro_price_sum_fmt }원</td>
+		          			 </tr>
+		            </c:when>
+		            <c:otherwise>
+		          		  <tr>
+		            		<td colspan= '5'>장바구니에 담긴 상품이 없습니다.</td>
+		           		 </tr> 
+		            </c:otherwise>
+		            </c:choose>				
 		        </table>
 	        </div>
 	        <p>
-			  <button type="button" class="btn btn-default btn-lg" onclick="goCart()">장바구니</button>
+			  <button type="button" class="btn btn-default btn-lg" id="btn1" onclick="goCart()">장바구니</button>
 			  <button  type="button" class="btn btn-default btn-lg" id="buy" onclick="buy()">구매하기</button>
 			</p>
         </div>
@@ -223,4 +214,3 @@ function buy(){
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
-  --%>

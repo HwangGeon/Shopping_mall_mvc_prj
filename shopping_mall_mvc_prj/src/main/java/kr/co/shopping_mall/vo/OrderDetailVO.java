@@ -8,6 +8,8 @@ public class OrderDetailVO {
 	private int ordd_qty;
 	private String pro_name;
 	private int pro_price;
+	private String pro_price_fmt;
+	private String pro_price_sum_fmt;
 	
 	public OrderDetailVO() {
 	}
@@ -66,4 +68,21 @@ public class OrderDetailVO {
 	public void setPro_price(int pro_price) {
 		this.pro_price = pro_price;
 	}
+
+	public String getPro_price_fmt() {
+		return pro_price_fmt;
+	}
+
+	public void setPro_price_fmt(String pro_price_fmt) {
+		this.pro_price_fmt = pro_price_fmt;
+	}
+
+	public String getPro_price_sum_fmt() {
+		return pro_price_sum_fmt;
+	}
+
+	public void setPro_price_sum_fmt(String pro_price_sum_fmt) {
+		this.pro_price_sum_fmt = pro_price_sum_fmt;
+	}
+	
 }

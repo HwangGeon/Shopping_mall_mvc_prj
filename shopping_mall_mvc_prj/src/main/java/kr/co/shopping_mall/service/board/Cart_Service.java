@@ -1,6 +1,7 @@
-package kr.co.shopping_mall.service.user;
+package kr.co.shopping_mall.service.board;
 
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -9,12 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.shopping_mall.dao.user.Cart_DAO;
+import kr.co.shopping_mall.dao.user.Product_DAO;
 import kr.co.shopping_mall.vo.ProductVO;
 
 @Service
 public class Cart_Service {
 	@Autowired
 	private Cart_DAO cd;
+	@Autowired
+	private Product_DAO pd;
 
 	public ArrayList<ProductVO> addCartSession(HttpSession session, String pro_cd, int cnt) throws SQLException{
 		ArrayList<ProductVO> cart=null;
@@ -59,14 +63,44 @@ public class Cart_Service {
 	
 	public ArrayList<ProductVO> getCartSession(HttpSession session) throws SQLException{
 		ArrayList<ProductVO> cart=null;
+		DecimalFormat fmt=new DecimalFormat("#,###,###,##0");
 		
 		Object obj=session.getAttribute("cart");
-
+		int totalSum = 0, total = 0;
 		if(obj==null){
 			cart=new ArrayList<ProductVO>();
 		}else{
 			cart=(ArrayList<ProductVO>)obj;
 		}//end else
+		for(ProductVO pv : cart){
+			total = pv.getPro_price() * pv.getCnt();
+			totalSum += total;
+			pv.setPro_price_fmt(fmt.format(total));
+			pv.setPro_price_sum_fmt(fmt.format(totalSum));
+		}//end for
 		return cart;
 	}//addCartSession
+	
+	public String removeCart(HttpSession session, String pro_cd) throws SQLException {
+		String msg="";
+		if(pro_cd==null){
+			return msg;
+		}
+		//해당 pro_cd 값을 이용해서 상품 상세정보를 얻어오는 코드
+		ProductVO pv=pd.selectPro(pro_cd);
+		if(pv==null){
+			msg="장바구니에 삭제할 상품이 없습니다.";
+			return msg;
+		}
+		ArrayList<ProductVO> cart=(ArrayList<ProductVO>)session.getAttribute("cart");
+		ProductVO goodQnt = new ProductVO();
+		for(int i=0;i<cart.size();i++){
+			goodQnt=cart.get(i);
+			if(goodQnt.getPro_cd().equals(pro_cd)){
+				cart.remove(goodQnt);
+			}
+		}
+
+	return msg;
+	}
 }//class
