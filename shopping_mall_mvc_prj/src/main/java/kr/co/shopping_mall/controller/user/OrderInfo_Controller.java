@@ -6,7 +6,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.co.shopping_mall.service.user.OrderInfo_Service;
+import kr.co.shopping_mall.vo.DeliveryVO;
+import kr.co.shopping_mall.vo.OrderDetailVO;
 import kr.co.shopping_mall.vo.OrderInfoVO;
+import kr.co.shopping_mall.vo.ProductVO;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -47,4 +50,21 @@ public class OrderInfo_Controller {
 		return "user/myOrder";
 	}//cancelOrder
 	
+	@RequestMapping(value = "user/order_detail.do", method = GET)
+	public String OrderDetail(HttpSession session, String ord_cd, Model model) {
+		List<OrderDetailVO> odList=null;
+		List<ProductVO> prdList;
+		DeliveryVO dVO;
+		try {
+			odList=ois.searchOrdDetail(ord_cd);
+			dVO=ois.searchDVO(ord_cd);
+			prdList=ois.searchPrdDetail(ord_cd);
+			model.addAttribute("odList",odList);
+			model.addAttribute("prdList",prdList);
+			model.addAttribute("dVO",dVO);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "user/order_detail";
+	}
 }//class

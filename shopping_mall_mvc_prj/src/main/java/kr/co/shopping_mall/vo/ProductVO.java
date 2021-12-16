@@ -11,6 +11,7 @@ public class ProductVO {
 	private String input_date;
 	private int cnt;
 	private String pro_price_fmt;
+	private String pro_price_sum_fmt;
 	private String no;
 
 	public ProductVO() {
@@ -108,6 +109,15 @@ public class ProductVO {
 		this.pro_price_fmt = pro_price_fmt;
 	}
 	
+	
+	public String getPro_price_sum_fmt() {
+		return pro_price_sum_fmt;
+	}
+
+	public void setPro_price_sum_fmt(String pro_price_sum_fmt) {
+		this.pro_price_sum_fmt = pro_price_sum_fmt;
+	}
+
 	public String getNo() {
 		return no;
 	}

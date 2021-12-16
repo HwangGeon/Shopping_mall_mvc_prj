@@ -1,4 +1,4 @@
-package kr.co.shopping_mall.controller.user;
+package kr.co.shopping_mall.controller.board;
 
 import javax.servlet.http.HttpSession;
 
@@ -7,10 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import kr.co.shopping_mall.service.user.Cart_Service;
+import kr.co.shopping_mall.service.board.Cart_Service;
 import kr.co.shopping_mall.service.user.Product_Service;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.sql.SQLException;
 
@@ -43,6 +44,20 @@ public class Cart_Controller {
 			e.printStackTrace();
 		}
 		return "board/cart_list";
+	}//getCartSession
+	
+	@RequestMapping(value="board/removeCart.do", method=POST)
+	public String removeCart(HttpSession session, String pro_cd, Model model) {
+		try {
+			String msg=cs.removeCart(session, pro_cd);
+			if(!("".equals(msg))){
+			model.addAttribute("msg",msg);
+			}
+		} catch (SQLException e) {
+			model.addAttribute("msg","Error");
+			e.printStackTrace();
+		}
+		return "board/cart_list"; 		 	
 	}//getCartSession
 	
 }

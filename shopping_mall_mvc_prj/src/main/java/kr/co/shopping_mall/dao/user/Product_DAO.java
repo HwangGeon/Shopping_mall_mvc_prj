@@ -119,7 +119,7 @@ public class Product_DAO {
 		
 		String selectDetail="select * from product where pro_cd=?";
 		pv=jt.queryForObject(selectDetail, new Object[] { String.valueOf(pro_cd) }, new SelectPro());
-
+		
 		return pv;
 	}//selectPro
 	

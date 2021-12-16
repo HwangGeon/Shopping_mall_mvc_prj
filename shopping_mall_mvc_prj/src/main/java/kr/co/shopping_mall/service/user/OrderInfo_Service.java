@@ -1,6 +1,10 @@
 package kr.co.shopping_mall.service.user;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +12,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.shopping_mall.dao.user.OrderInfo_DAO;
+import kr.co.shopping_mall.dao.user.Order_DAO;
+import kr.co.shopping_mall.vo.DeliveryVO;
+import kr.co.shopping_mall.vo.OrderDetailVO;
 import kr.co.shopping_mall.vo.OrderInfoVO;
+import kr.co.shopping_mall.vo.ProductVO;
+import kr.co.sist.util.cipher.DataDecrypt;
 
 @Service
 public class OrderInfo_Service {
 	@Autowired
 	private OrderInfo_DAO oid;
+	@Autowired
+	private Order_DAO od;
 	
 	public List<OrderInfoVO> getOrderList(String user_id) throws SQLException{
 		List<OrderInfoVO> list=null;
@@ -49,4 +60,50 @@ public class OrderInfo_Service {
 		return list;
 	}//getOrderList
 	
+	//주문상세정보 테이블 조회
+	public List<OrderDetailVO> searchOrdDetail(String ord_cd) throws SQLException {
+		List<OrderDetailVO> odList=od.selectOrdDetail(ord_cd);
+		List<ProductVO> prdList=od.selectPrd(ord_cd);
+		DecimalFormat fmt=new DecimalFormat("#,###,###,##0");
+		int totalSum = 0, total = 0;
+		for(OrderDetailVO ov : odList){
+			for(ProductVO pv : prdList){
+				/* for(int i=0;i<prdList.size();i++) { */
+			total = pv.getPro_price() * ov.getOrdd_qty();
+			ov.setPro_price_fmt(fmt.format(total));
+		}//end for
+			totalSum += total;
+			ov.setPro_price_sum_fmt(fmt.format(totalSum));
+		}
+		return odList;
+	}
+	
+	////주문 상세코드로 상품정보 조회
+	public List<ProductVO> searchPrdDetail(String ord_cd) throws SQLException {
+		List<ProductVO> prdList=od.selectPrd(ord_cd);
+		return prdList;
+	}
+	/*
+	 * //가격 조회 public int[] total(String ord_cd) throws SQLException {
+	 * List<OrderDetailVO> odList=od.selectOrdDetail(ord_cd); List<ProductVO>
+	 * prdList=od.selectPrd(ord_cd); odList.getorddQty(); }
+	 */
+	
+	//배송정보 조회
+	public DeliveryVO searchDVO(String ord_cd) throws SQLException {
+		DeliveryVO dVO=null;
+		try {
+			DataDecrypt dd = new DataDecrypt("AbcdEfgHiJkLmnOpQ");
+			dVO=od.selectDelivery(ord_cd);
+			dVO.setDv_name(dd.decryption(dVO.getDv_name()));
+			dVO.setDv_tel(dd.decryption(dVO.getDv_tel()));
+			} catch (NoSuchAlgorithmException e) {
+				e.printStackTrace();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			} catch (GeneralSecurityException e) {
+				e.printStackTrace();
+			}	
+		return dVO;
+		}
 }//class

@@ -158,6 +158,9 @@ $(function(){
 	});//click
 	
 });//ready
+<c:if test="${ param.err_flag eq '1' }">
+alert("Error");
+</c:if>
 </script>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
