@@ -12,8 +12,8 @@ $(function(){
 });//ready
 
 function moveLogin(){
-	//location.href="http://localhost/shopping_mall/user/login/loginForm.do";
-	location.href="user/login/loginForm.do";
+	location.href="http://localhost/shopping_mall/user/login/loginForm.do";
+	//location.href="user/login/loginForm.do";
 }
 
 function moveLogout(){
@@ -31,19 +31,22 @@ function moveCart(){
 	<h1
 		style="text-align: center; font-size:2.5rem; margin: 30px 0; color: #D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
 		<a href="http://localhost/shopping_mall/index.do" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
-	<% if(session.getAttribute("user_id")==null){ %>
+	<c:choose>
+	<c:when test="${ empty user_id }">
 	<input type="button" class="btn" value="로그인"
 		style="position: absolute; top: 10px; right: 110px;" onclick="moveLogin()">
 	<input type="button" class="btn" value="장바구니"
 		style="position: absolute; top: 10px; right: 30px;" onclick="moveCart()">
-	<%}else{ %>
+	</c:when>
+	<c:otherwise>
 	<input type="button" class="btn" value="로그아웃"
 		style="position: absolute; top: 10px; right: 205px;" onclick="moveLogout()">
 	<input type="button" class="btn" value="마이페이지"
 		style="position: absolute; top: 10px; right: 110px;" onclick="moveMy()">
 	<input type="button" class="btn" value="장바구니"
 		style="position: absolute; top: 10px; right: 30px;" onclick="moveCart()">
-	<%} %>
+	</c:otherwise>
+	</c:choose>
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">

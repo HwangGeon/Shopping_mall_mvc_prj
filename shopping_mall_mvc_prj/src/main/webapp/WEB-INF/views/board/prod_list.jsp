@@ -72,7 +72,7 @@
 			class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
 			<!-- 상품 -->
 		
-		<c:if test="${  proCnt ne null }">
+		<c:if test="${  proCnt ne '0' }">
 			<c:forEach var="pro" items="${ proData }">
 			<c:set var="i" value="${ i+1 }"/>
 			<div class="col mb-5">
@@ -106,16 +106,6 @@
 				aria-disable="true">Previous </a></li>
 			</c:if>
 			<c:if test="${ ppVO.startPage ne 1 }">
-			<%-- <c:if test="${ category_cd ne null }">
-			<li class="page-item"><a class="page-link" href=
-			"http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ ppVO.startPage-1 }"
-				 tabindex="-1" aria-disable="true">Previous </a></li>
-			</c:if>
-			<c:if test="${ searchValue ne null }">
-			<li class="page-item"><a class="page-link" href=
-			"http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ ppVO.startPage-1 }"
-				 tabindex="-1" aria-disable="true">Previous </a></li>
-			</c:if> --%>
 			<c:choose>
 			<c:when test="${ searchValue ne null }">
 			<li class="page-item"><a class="page-link" href=
@@ -139,12 +129,6 @@
 			<li class="page-item">			
 			</c:otherwise>
 			</c:choose>
-			<%-- <c:if test="${ category_cd ne null }">
-			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?category_cd=${ category_cd }&page=${ i }">${ i }</a></li>
-			</c:if>
-			<c:if test="${ searchValue ne null }">
-			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ i }">${ i }</a></li>
-			</c:if> --%>
 			<c:choose>
 			<c:when test="${ searchValue ne null }">
 			<a class="page-link my" href="http://localhost/shopping_mall/board/prod_list.do?searchValue=${ searchValue }&page=${ i }">${ i }</a></li>
@@ -176,7 +160,7 @@
 		</ul>
 	</nav> 
 	</c:if>
-		<c:if test="${ proCnt eq null }">
+		<c:if test="${ proCnt eq '0' }">
 			<div id="last">해당 상품이 존재하지 않습니다.</div>
 		</c:if>
 </section>
