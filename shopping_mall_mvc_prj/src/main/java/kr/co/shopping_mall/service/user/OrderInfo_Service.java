@@ -60,6 +60,17 @@ public class OrderInfo_Service {
 		return list;
 	}//getOrderList
 	
+	//주문취소로 변경
+	public int changeOrderState(String[] chk) {
+		int cnt=0;
+		
+		for(int i=0; i < chk.length; i++){
+			oid.updateOrderInfo(chk[i]);
+		}//end for
+		
+		return cnt;
+	}//changeOrderState
+	
 	//주문상세정보 테이블 조회
 	public List<OrderDetailVO> searchOrdDetail(String ord_cd) throws SQLException {
 		List<OrderDetailVO> odList=od.selectOrdDetail(ord_cd);

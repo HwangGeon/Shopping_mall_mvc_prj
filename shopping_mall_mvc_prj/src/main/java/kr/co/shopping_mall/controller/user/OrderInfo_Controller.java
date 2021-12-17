@@ -41,16 +41,17 @@ public class OrderInfo_Controller {
 	}//orderList
 	
 	@RequestMapping(value="user/myOrder_proc.do", method=POST)
-	public String cancelOrder(String[] chk) {
+	public String cancelOrder(String[] chk, Model model) {
 		//체크된 항목 없으면
 		if(chk == null) {
 			return "user/myOrder_proc";
 		}//end if
 		
+		model.addAttribute("chk", chk);
 		//체크된 항목 주문취소로 변경
+		ois.changeOrderState(chk);
 		
-		
-		return "user/myOrder";
+		return "user/myOrder_proc";
 	}//cancelOrder
 	
 	@RequestMapping(value = "user/order_detail.do", method = GET)

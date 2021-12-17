@@ -1,26 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="회원정보수정"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<%-- <%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
-
-if(user_id==null){ 
-	response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
-	return;
-}//end if %>
-<%
-
-	//user_id값을 통한 개인정보조회
-	UserDAO ud=new UserDAO();
-	UserInfoVO uv=ud.selectInfo(user_id);
-
-	//개인정보 복호화
-	DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
-	uv.setUser_name(dd.decryption(uv.getUser_name()));
-	uv.setUser_email(dd.decryption(uv.getUser_email()));
-	uv.setUser_tel(dd.decryption(uv.getUser_tel()));	
-%> --%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -43,6 +24,9 @@ if(user_id==null){
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
+<c:if test="${sessionScope.user_id eq null }">
+<c:redirect url="http://localhost/shopping_mall/user/login/loginForm.do?err_flag=1"/>
+</c:if> 
 <style type="text/css">
 .col-auto{width : 100px}
  .dt{
