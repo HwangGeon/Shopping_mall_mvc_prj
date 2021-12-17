@@ -32,7 +32,7 @@ public class Help_Controller {
 		
 		try {
 			try {
-				id=hs.findId(hpVO);
+				id=hs.findId(hpVO);//조회한 아이디
 				model.addAttribute("user_name", hpVO.getUser_name());
 				model.addAttribute("id", id);
 			} catch (UnsupportedEncodingException e) {
