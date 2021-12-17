@@ -34,7 +34,7 @@ public class Help_Controller {
 			try {
 				id=hs.findId(hpVO);
 				model.addAttribute("user_name", hpVO.getUser_name());
-				model.addAttribute("user_id", id);
+				model.addAttribute("id", id);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			} catch (NoSuchAlgorithmException e) {

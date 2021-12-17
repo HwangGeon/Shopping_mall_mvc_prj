@@ -41,7 +41,7 @@
 </div>
 <hr class="lin" style="border: solid 1px black; width : 800px">
 
-<h4 style="text-align:center; margin-bottom:189px; margin-top : 70px ;color:#D8D8D8; font-weight: bold; font-family: 'Sunflower', sans-serif;">${ user_name }님의 아이디는 '${ user_id }' 입니다.</h4>
+<h4 style="text-align:center; margin-bottom:189px; margin-top : 70px ;color:#D8D8D8; font-weight: bold; font-family: 'Sunflower', sans-serif;">${ user_name }님의 아이디는 '${ id }' 입니다.</h4>
 	<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
