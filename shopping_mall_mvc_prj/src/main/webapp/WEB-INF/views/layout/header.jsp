@@ -13,7 +13,6 @@ $(function(){
 
 function moveLogin(){
 	location.href="http://localhost/shopping_mall/user/login/loginForm.do";
-	//location.href="user/login/loginForm.do";
 }
 
 function moveLogout(){
