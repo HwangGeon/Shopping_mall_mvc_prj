@@ -46,14 +46,14 @@ public class User_DAO {
 	 * @return user_id
 	 * @throws DataAccessException
 	 */
-	public String selectId(UserVO uVO) throws DataAccessException {	
+	public String selectId(String user_id, String user_pw) throws DataAccessException {	
 		
-		String user_id = "";
+		String userId = "";
 		
 		String selectId = "select user_id from users where user_id=? and user_pw=?";
-		user_id = jt.queryForObject(selectId, new Object[] { uVO.getUser_id(),uVO.getUser_pw() }, String.class);
+		userId = jt.queryForObject(selectId, new Object[] { user_id,user_pw }, String.class);
 		
-		return user_id;
+		return userId;
 	}//selectId
 	
 	
@@ -70,11 +70,11 @@ public class User_DAO {
 	}// insertMember
 	
 	//Å»Åð ÇÃ·¡±× º¯°æ
-	public int updateDelFl(UserVO uVO) throws SQLException{
+	public int updateDelFl(String user_id, String user_pw) throws SQLException{
 		int cnt=0;
 		
-		String delFlUpdate="update users set user_pw=null, user_name=null, user_tel=null, user_email=null, del_fl='y', sec_date=sysdate where user_id=?and user_pw=?";
-		cnt=jt.update(delFlUpdate, uVO);
+		String delFlUpdate="update users set user_pw=null, user_name=null, user_tel=null, user_email=null, del_fl='y', sec_date=sysdate where user_id=? and user_pw=?";
+		cnt=jt.update(delFlUpdate, user_id, user_pw);
 		
 		return cnt;
 	}//updateDelFl

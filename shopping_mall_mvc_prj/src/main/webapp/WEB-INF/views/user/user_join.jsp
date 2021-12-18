@@ -199,7 +199,7 @@ alert("${ msg }");
             <input type="password" name="user_pw" class="form-control" id="user_pw1" placeholder="비밀번호">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="password" name="user_pw" class="form-control" id="user_pw2" placeholder="비밀번호 확인">
+            <input type="password" class="form-control" id="user_pw2" placeholder="비밀번호 확인">
          </div>
          <div class="input-group input-group-lg mb-4">
             <input type="text" name="user_name" class="form-control" id="user_name" placeholder="이름">
