@@ -78,14 +78,13 @@ public class OrderInfo_Service {
 		DecimalFormat fmt=new DecimalFormat("#,###,###,##0");
 		int totalSum = 0, total = 0;
 		for(OrderDetailVO ov : odList){
-			for(ProductVO pv : prdList){
-				/* for(int i=0;i<prdList.size();i++) { */
-			total = pv.getPro_price() * ov.getOrdd_qty();
+				/* for(int i=0;i<prdList.size();i++) { */	
+			total = oid.selectPrice(ov.getPro_cd()) * ov.getOrdd_qty();
+			/*total = pv.getPro_price() * ov.getOrdd_qty();*/
 			ov.setPro_price_fmt(fmt.format(total));
-		}//end for
 			totalSum += total;
 			ov.setPro_price_sum_fmt(fmt.format(totalSum));
-		}
+		}//end for
 		return odList;
 	}
 	

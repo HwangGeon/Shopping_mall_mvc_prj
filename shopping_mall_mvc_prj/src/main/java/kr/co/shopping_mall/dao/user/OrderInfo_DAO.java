@@ -59,4 +59,12 @@ public class OrderInfo_DAO {
 		return cnt;
 	}//updateOrderInfo	
 	
+	//가격조회
+	public int selectPrice(String pro_cd) {
+		int price=0;
+		String selPrice="select pro_price from  product where pro_cd=?";
+		price=jt.queryForObject(selPrice.toString(), new Object[] {pro_cd}, Integer.class);
+		return price;
+	}
+	
 }//class
