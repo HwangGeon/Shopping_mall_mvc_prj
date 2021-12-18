@@ -11,7 +11,7 @@
 <title>마이페이지_주문내역</title>
 
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->

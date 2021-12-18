@@ -2,6 +2,7 @@
 <%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="회원탈퇴"%>
+ <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap" rel="stylesheet">
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!-- Bootstrap icons-->
 <link
    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -23,6 +26,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
+<c:if test="${sessionScope.user_id eq null }">
+<c:redirect url="http://localhost/shopping_mall/user/login/loginForm.do?err_flag=1"/>
+</c:if> 
 <style type="text/css">
 .col-auto{width : 100px}
  .dt{
@@ -110,9 +116,31 @@ $(function(){
       $("#delFrm").submit();
    });//click
    
+	$("#user_pw2").keydown(function(key){
+		if(key.keyCode==13){
+			  if($("#user_pw").val() == ""){
+			         alert("비밀번호를 입력해 주세요.");
+			         $("#user_pw").focus();
+			         return;
+			      }//end if
+			      if($("#user_pw2").val() == ""){
+			         alert("비밀번호 확인을 입력해 주세요.");
+			         $("#user_pw2").focus();
+			         return;
+			      }//end if
+			      if($("#user_pw").val() != $("#user_pw2").val()){
+			         alert("비밀번호가 일치하지 않습니다.");
+			          $('#user_pw1').focus();
+			          $('#user_pw2').val('');
+			         return;
+			      }//end if
+			$("#delFrm").submit();
+		}
+	});
+   
 });//ready
 function goBack(){
-   location.href="http://localhost/shopping_mall/views/user/infoUpdateForm.do";
+   location.href="http://localhost/shopping_mall/user/infoUpdateForm.do";
 }
 <c:if test="${ not empty msg }">
 alert("${ msg }");
@@ -120,30 +148,24 @@ alert("${ msg }");
 </script>
 <body>
    <jsp:include page="../layout/header.jsp"/>
-<%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){
- response.sendRedirect("http://localhost/shopping_mall/user/login/loginForm.do.do?err_flag=1");
- return;
-}//end if %> 
+
      &nbsp;<div class="dl" >
            <a href="http://localhost/shopping_mall/views/user/myOrder.do"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
            <a href="http://localhost/shopping_mall/views/user/myInfo.do"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="delFrm" name="delFrm" action="member/delete_proc.do" method="post">
+     <form id="delFrm" name="delFrm" action="delete_proc.do" method="post">
       <div align="center" style="color: #D09869; margin-bottom: 5%;">
          <div style="width: 35%;">
          <h2 id="title2">회원 탈퇴</h2>
             <div class="container3">
-               <input type="text" class="passInput" readonly="readonly" placeholder="<%= user_id%>"/>
+               <input type="text" class="passInput" readonly="readonly" name="user_id" value="${  user_id}"/>
             </div>
             <div class="container3">
                <input type="password" class="passInput" id="user_pw" name="user_pw" placeholder="비밀번호"/>
             </div>
             <div class="container3">
-               <input type="password" class="passInput" id="user_pw2" name="user_pw" placeholder="비밀번호 확인"/>
+               <input type="password" class="passInput" id="user_pw2"  placeholder="비밀번호 확인"/>
             </div>
          </div>
       </div>

@@ -93,6 +93,7 @@ $(function(){
 <c:if test="${ not empty msg }">
 	alert("${ msg }");
 </c:if>
+
 <c:if test="${ param.err_flag eq '1' }">
 alert("로그인이 필요한 페이지입니다.");//실행
 </c:if>

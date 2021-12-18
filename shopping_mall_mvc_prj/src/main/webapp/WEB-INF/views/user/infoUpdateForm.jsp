@@ -156,7 +156,7 @@ function goBack(){
 		 <button type="button" class="btn btn-default btn-lg" id="backBtn" onclick="goBack()">돌아가기</button>
 	</p>
      </form>
-	   <form action="deleteForm.jsp" method="post" id="deleteFrm">
+	   <form action="member/deleteForm.do" method="post" id="deleteFrm">
          <input type="hidden" name="user_id" id="user_id">
         </form>
 	<jsp:include page="../layout/footer.jsp"/>

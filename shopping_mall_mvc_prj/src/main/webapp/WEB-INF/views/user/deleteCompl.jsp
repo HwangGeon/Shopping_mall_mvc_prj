@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원탈퇴완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -32,12 +32,16 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 #btn{width:15%; height:50px; background:#0099FF; ;color:#FFFFFF; font-size:16px; font-weight:bold; margin-bottom: 40px}
 </style>
 <script type="text/javascript">
-
+$(function(){
+	   $("#btn").click(function(){
+			location.href="http://localhost/shopping_mall/index.do";
+	   })
+});
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 		<div id="wrap" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">                          
-			<img src="http://localhost/shopping_mall_prj/common/image/check.png"><br/>
+			<img src="http://localhost/shopping_mall/common/image/check.png"><br/>
 			<div>
 				<h2 class="join">회원탈퇴가 완료되었습니다.</h2>
 				<div>그동안 서비스를 이용해 주셔서 감사합니다.</div>
